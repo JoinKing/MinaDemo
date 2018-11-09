@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity implements ChatScreenContrac
         initMina();
     }
     public void sendText(View view){
-
         presenter.sendTextMsg("0001","1","000","第一次测试聊天服务");
     }
     private void initMina() {

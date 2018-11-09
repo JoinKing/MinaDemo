@@ -24,6 +24,7 @@ public class ClientHandlerMsg extends IoHandlerAdapter{
     public void messageReceived(IoSession session, Object message) throws Exception {
         super.messageReceived(session, message);
         MsgCodeModel model = (MsgCodeModel) message;
+        Log.e("收到消息", "messageReceived: "+new String(model.getBody()) );
         if (msg != null){
             msg.receivedMsg(model);
         }
@@ -33,7 +34,6 @@ public class ClientHandlerMsg extends IoHandlerAdapter{
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
         super.messageSent(session, message);
-        Log.d("mina心跳", "messageSent: "+message);
         if (status != null){
             status.successStatus(message);
         }

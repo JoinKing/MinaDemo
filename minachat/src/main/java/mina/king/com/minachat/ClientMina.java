@@ -32,7 +32,7 @@ import mina.king.com.minachat.utils.IpUtils;
 
 public class ClientMina extends Thread {
     public static ClientMina clientMina;
-    private static String TAG = "[CDCT]";
+    private static String TAG = "[mina]";
     //30秒后超时
     private static final int IDELTIMEOUT = 10;
     //15秒发送一次心跳包
@@ -116,7 +116,6 @@ public class ClientMina extends Thread {
             connector.addListener(new MinaIoServiceListener() {
                 @Override
                 public void sessionDestroyed(IoSession arg0) throws Exception {
-                    // TODO Auto-generated method stub
                     super.sessionDestroyed(arg0);
                     try {
                         int failCount = 0;
@@ -142,7 +141,7 @@ public class ClientMina extends Thread {
                             }
                         }
                     } catch (Exception e) {
-                        // TODO: handle exception
+
                     }
                 }
             });
@@ -157,7 +156,9 @@ public class ClientMina extends Thread {
                 System.out.println(115);
                 //判断是否连接服务器成功
                 if (session != null && session.isConnected()) {
-                    session.write("start");
+//                    session.write("start");
+                    session.write(EditDataModel.init().sendData("0001"));
+
                 } else {
                     System.out.println("写数据失败");
                 }
@@ -180,7 +181,6 @@ public class ClientMina extends Thread {
     public void writeData(Object order) {
         if (null != session && session.isConnected()) {
             session.write(order);
-            Log.d(TAG, "数据上报成功:");
             return;
         }
     }

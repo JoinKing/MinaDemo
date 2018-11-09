@@ -18,7 +18,6 @@ public class EditDataModel {
 
     public static EditDataModel model = null;
     private EditDataModel(){
-
     }
     public static EditDataModel init(){
         if (model==null){

@@ -1,12 +1,14 @@
 package mina.king.com.minachat.model;
 
 
+import java.io.Serializable;
+
 /**
  * 消息协议
  * @author hsq
  *
  */
-public class MsgCodeModel {
+public class MsgCodeModel implements Serializable {
 	
     private int headLength;// 参数头长度
     private String header;// 协议头
