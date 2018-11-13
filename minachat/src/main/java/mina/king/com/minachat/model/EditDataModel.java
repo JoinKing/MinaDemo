@@ -29,7 +29,7 @@ public class EditDataModel {
         HashMap<String,Object> json1 = new HashMap<>();
         json1.put("sender",senderFirst);
         json1.put("receiver","");
-        json1.put("msgType",-1);
+        json1.put("msgType","1");
         json1.put("fileName","");
         json1.put("bodyLength",0);
         JSONObject jsonObject1 = new JSONObject(json1);
