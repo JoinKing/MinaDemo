@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.util.Arrays;
 
 /**
- * Created by hxb on 2017/10/31.
+ * Created by king on 2017/10/31.
  */
 
 public class ChatDialogueBean {

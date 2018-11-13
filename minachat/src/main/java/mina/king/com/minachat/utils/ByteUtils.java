@@ -1,7 +1,7 @@
 package mina.king.com.minachat.utils;
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  */
 
 public class ByteUtils {

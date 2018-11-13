@@ -8,7 +8,7 @@ import org.apache.mina.core.session.IoSession;
 import mina.king.com.minachat.model.MsgCodeModel;
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  * 消息接收
  */
 

@@ -1,6 +1,5 @@
 package mina.king.com.minachat.model;
 
-import android.util.Log;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.json.JSONObject;
@@ -10,7 +9,7 @@ import java.util.HashMap;
 import mina.king.com.minachat.utils.ByteUtils;
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  *
  */
 

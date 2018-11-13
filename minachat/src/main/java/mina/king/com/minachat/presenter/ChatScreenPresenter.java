@@ -16,7 +16,7 @@ import mina.king.com.minachat.model.EditDataModel;
 import mina.king.com.minachat.model.MsgCodeModel;
 
 /**
- * Created by hxb on 2018/3/28.
+ * Created by king on 2018/3/28.
  */
 
 public class ChatScreenPresenter {

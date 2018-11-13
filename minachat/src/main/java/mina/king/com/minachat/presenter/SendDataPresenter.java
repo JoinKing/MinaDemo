@@ -4,7 +4,7 @@ package mina.king.com.minachat.presenter;
 import mina.king.com.minachat.ClientMina;
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  *
  */
 

@@ -14,7 +14,7 @@ import mina.king.com.minachat.presenter.ChatScreenPresenter;
 
 
 /**
- * Created by hxb on 2018/3/28.
+ * Created by king on 2018/3/28.
  */
 
 public class ChatScreenModel implements ChatScreenContract.Model {

@@ -27,7 +27,7 @@ import mina.king.com.minachat.utils.IpUtils;
 
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  */
 
 public class ClientMina extends Thread {

@@ -6,7 +6,7 @@ import mina.king.com.minachat.beans.ChatDialogueBean;
 
 
 /**
- * Created by hxb on 2018/3/28.
+ * Created by king on 2018/3/28.
  */
 
 public interface ChatScreenContract {

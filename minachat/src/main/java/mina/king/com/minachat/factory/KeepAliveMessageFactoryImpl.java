@@ -4,7 +4,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
 /**
- * Created by hxb on 2017/11/17.
+ * Created by king on 2017/11/17.
  */
 
 public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory{
