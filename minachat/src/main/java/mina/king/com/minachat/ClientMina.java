@@ -113,7 +113,38 @@ public class ClientMina extends Thread {
             //设置默认连接远程服务器的IP地址和端口
             connector.setDefaultRemoteAddress(new InetSocketAddress(IpUtils.ip, IpUtils.port));
             // 监听客户端是否断线
-            connector.addListener(new MinaIoServiceListener(connector));
+            connector.addListener(new MinaIoServiceListener(){
+                @Override
+                public void sessionDestroyed(IoSession session) {
+                    try {
+                        int failCount = 0;
+                        while (true) {
+                            Thread.sleep(5000);
+                            System.out.println(((InetSocketAddress) connector.getDefaultRemoteAddress()).getAddress()
+                                    .getHostAddress());
+                            ConnectFuture future = connector.connect();
+                            System.out.println("断线2");
+                            future.awaitUninterruptibly();// 等待连接创建完成
+                            Log.e(TAG, "sessionDestroyed: 正在重连1" );
+                            session = future.getSession();// 获得session
+                            Log.e(TAG, "sessionDestroyed: 正在重连2" );
+                            if (session != null && session.isConnected()) {
+                                Log.e(TAG, "sessionDestroyed: 正在重连3" );
+                                System.out.println("断线重连["
+                                        + ((InetSocketAddress) session.getRemoteAddress()).getAddress().getHostAddress()
+                                        + ":" + ((InetSocketAddress) session.getRemoteAddress()).getPort() + "]成功");
+                                session.write(EditDataModel.init().sendData(IpUtils.sendUserId));
+                                break;
+                            } else {
+                                Log.e(TAG, "sessionDestroyed: 断线重连失败"+failCount+"次" );
+                            }
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+            });
             //开始连接
             try {
                 System.out.println(112);
