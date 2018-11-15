@@ -1,25 +1,17 @@
 package mina.king.com.minachat;
 
 import android.util.Log;
-import org.apache.mina.core.filterchain.IoFilterAdapter;
+
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoConnector;
-import org.apache.mina.core.service.IoService;
-import org.apache.mina.core.service.IoServiceListener;
-import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.keepalive.KeepAliveFilter;
-import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
-import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
-import org.apache.mina.filter.logging.LoggingFilter;
-import org.apache.mina.filter.logging.MdcInjectionFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+
 import java.net.InetSocketAddress;
 
 import mina.king.com.minachat.factory.CodingProtocol;
-import mina.king.com.minachat.factory.KeepAliveMessageFactoryImpl;
-import mina.king.com.minachat.handler.ClientHandlerMsg;
+import mina.king.com.minachat.handler.ClientHandler;
 import mina.king.com.minachat.listener.MinaIoServiceListener;
 import mina.king.com.minachat.model.EditDataModel;
 import mina.king.com.minachat.model.MsgCodeModel;
@@ -30,7 +22,7 @@ import mina.king.com.minachat.utils.IpUtils;
  * Created by king on 2017/11/17.
  */
 
-public class ClientMina extends Thread {
+public class ClientMina extends Thread implements ClientHandler.ClientHandlerCallback{
     public static ClientMina clientMina;
     private static String TAG = "[mina]";
     //30秒后超时
@@ -38,7 +30,7 @@ public class ClientMina extends Thread {
     //15秒发送一次心跳包
     private static final int HEARTBEATRATE = 10;
 
-    private ClientHandlerMsg clientHandlerMsg;
+    private ClientHandler clientHandler;
     private ConnectFuture connectFuture;
     private IoSession session;
     private IoConnector connector;
@@ -76,26 +68,12 @@ public class ClientMina extends Thread {
      * 设置外部回调
      */
     public void initialize() {
-        /* ClientHandlerMsg */
-        if (null == clientHandlerMsg) {
-            clientHandlerMsg = new ClientHandlerMsg();
-            clientHandlerMsg.setDataStatus(new ClientHandlerMsg.IsSuccess() {
-                @Override
-                public void successStatus(Object message) {
-                    if (null != status) {
-                        status.successStatus(message);
-                    }
-                }
-            });
-            clientHandlerMsg.setMsg(new ClientHandlerMsg.ReceivedMsg() {
-                @Override
-                public void receivedMsg(MsgCodeModel message) {
-                    if (null != msg) {
-                        msg.receivedMsg(message);
-                    }
-                }
-            });
+        /* ClientHandler */
+        if (null == clientHandler) {
+            clientHandler = new ClientHandler();
+            clientHandler.setMsgState(this);
         }
+
     }
 
     private void connection() {
@@ -108,7 +86,7 @@ public class ClientMina extends Thread {
             // 添加过滤器
             connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new CodingProtocol()));
             System.out.println(110);
-            connector.setHandler(new ClientHandlerMsg());
+            connector.setHandler(clientHandler);
             System.out.println(111);
             //设置默认连接远程服务器的IP地址和端口
             connector.setDefaultRemoteAddress(new InetSocketAddress(IpUtils.ip, IpUtils.port));
@@ -134,9 +112,11 @@ public class ClientMina extends Thread {
                                         + ((InetSocketAddress) session.getRemoteAddress()).getAddress().getHostAddress()
                                         + ":" + ((InetSocketAddress) session.getRemoteAddress()).getPort() + "]成功");
                                 session.write(EditDataModel.init().sendData(IpUtils.sendUserId));
+                                connectStatus = CONNECT_SUCCESSFUL;
                                 break;
                             } else {
                                 Log.e(TAG, "sessionDestroyed: 断线重连失败"+failCount+"次" );
+                                connectStatus = CONNECT_FAILURE;
                             }
                         }
                     } catch (Exception e) {
@@ -157,8 +137,10 @@ public class ClientMina extends Thread {
                 //判断是否连接服务器成功
                 if (session != null && session.isConnected()) {
                     session.write(EditDataModel.init().sendData(IpUtils.sendUserId));
+                    connectStatus = CONNECT_SUCCESSFUL;
                 } else {
                     System.out.println("写数据失败");
+                    connectStatus = CONNECT_FAILURE;
                 }
                 System.out.println(11);
             } catch (Exception e) {
@@ -203,6 +185,31 @@ public class ClientMina extends Thread {
             connector.getFilterChain().clear();
             connector.dispose();
             connector = null;
+        }
+    }
+
+    /**
+     * 收到消息回掉
+     * @param message
+     */
+    @Override
+    public void receivedMsg(MsgCodeModel message) {
+        Log.e(TAG, "receivedMsg: " );
+        if (null != msg) {
+            msg.receivedMsg(message);
+        }
+
+    }
+
+    /**
+     * 消息发送成功回掉
+     * @param state
+     */
+    @Override
+    public void successStatus(Object state) {
+        Log.e(TAG, "receivedMsg: " );
+        if (null != status) {
+            status.successStatus(state);
         }
     }
 

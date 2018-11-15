@@ -12,11 +12,12 @@ import mina.king.com.minachat.model.MsgCodeModel;
  * 消息接收
  */
 
-public class ClientHandlerMsg extends IoHandlerAdapter{
+public class ClientHandler extends IoHandlerAdapter{
+
+    //服务器发送异常
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
         super.exceptionCaught(session, cause);
-        Log.e("mina", "服务器发送异常: "+cause.getMessage());
     }
 
     //收到消息
@@ -24,9 +25,11 @@ public class ClientHandlerMsg extends IoHandlerAdapter{
     public void messageReceived(IoSession session, Object message) throws Exception {
         super.messageReceived(session, message);
         MsgCodeModel model = (MsgCodeModel) message;
-        Log.e("收到消息", "messageReceived: "+new String(model.getBody()) );
-        if (msg != null){
-            msg.receivedMsg(model);
+        Log.e("dsd", "messageReceived: "+new String(model.getBody()) );
+        if (handlerCallback != null){
+            handlerCallback.receivedMsg(model);
+        }else {
+            Log.e("msg", "==null: " );
         }
     }
 
@@ -34,8 +37,8 @@ public class ClientHandlerMsg extends IoHandlerAdapter{
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
         super.messageSent(session, message);
-        if (status != null){
-            status.successStatus(message);
+        if (handlerCallback != null){
+            handlerCallback.successStatus(message);
         }
 
     }
@@ -64,21 +67,14 @@ public class ClientHandlerMsg extends IoHandlerAdapter{
         Log.d("mina", "服务器与客户端连接打开: " );
     }
 
-   public interface IsSuccess{
-       void successStatus(Object message);
-   }
-   private IsSuccess status;
+    private ClientHandlerCallback handlerCallback;
+    public interface ClientHandlerCallback{
 
-    public void setDataStatus(IsSuccess status) {
-        this.status = status;
-    }
-
-    private ReceivedMsg msg;
-    public interface ReceivedMsg{
         void receivedMsg(MsgCodeModel message);
+        void successStatus(Object state);
     }
 
-    public void setMsg(ReceivedMsg msg) {
-        this.msg = msg;
+    public void setMsgState(ClientHandlerCallback handlerCallback) {
+        this.handlerCallback = handlerCallback;
     }
 }

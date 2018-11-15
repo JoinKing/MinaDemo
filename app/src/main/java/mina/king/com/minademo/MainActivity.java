@@ -1,11 +1,11 @@
 package mina.king.com.minademo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import mina.king.com.minachat.ClientMina;
-import mina.king.com.minachat.beans.ChatDialogueBean;
+import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minachat.contract.ChatScreenContract;
 import mina.king.com.minachat.presenter.ChatScreenPresenter;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements ChatScreenContrac
     }
 
     @Override
-    public void receivedMsg(ChatDialogueBean bean) {
+    public void receivedMsg(MessageInfo bean) {
 
     }
 }

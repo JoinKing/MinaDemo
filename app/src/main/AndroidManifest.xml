@@ -32,10 +32,7 @@
         </activity>
         <activity
             android:name=".ui.activity.FullImageActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:theme="@android:style/Theme.Translucent" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,4 +1,4 @@
-package mina.king.com.minademo.enity;
+package mina.king.com.minachat.beans;
 
 /**
  * Created by king
@@ -8,13 +8,13 @@ package mina.king.com.minademo.enity;
 public class MessageInfo {
     private int type;
     private String content;
-    private String filepath;
-    private int sendState;
-    private String time;
-    private String header;
-    private long voiceTime;
-    private String msgId;
-    private String fileType;
+    private String filepath;//文件路径
+    private int sendState;//发送状态
+    private String time;//时间
+    private String header;//头像
+    private long voiceTime;//语音时间
+    private String msgId;//消息id
+    private String fileType;//文件类型
     private Object object;
     private String mimeType;
 

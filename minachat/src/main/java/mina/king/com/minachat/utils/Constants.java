@@ -1,4 +1,4 @@
-package mina.king.com.minademo.util;
+package mina.king.com.minachat.utils;
 
 /**
  * Created by king
@@ -16,10 +16,10 @@ public class Constants {
     public static final int CHAT_ITEM_SEND_ERROR = 0x004;
     public static final int CHAT_ITEM_SEND_SUCCESS = 0x005;
 
-    public static final String CHAT_FILE_TYPE_TEXT = "text";
-    public static final String CHAT_FILE_TYPE_FILE = "file";
-    public static final String CHAT_FILE_TYPE_IMAGE = "image";
-    public static final String CHAT_FILE_TYPE_VOICE = "voice";
-    public static final String CHAT_FILE_TYPE_CONTACT = "contact";
+    public static final String CHAT_FILE_TYPE_TEXT = "TEXT";
+    public static final String CHAT_FILE_TYPE_FILE = "FILE";
+    public static final String CHAT_FILE_TYPE_IMAGE = "IMAGE";
+    public static final String CHAT_FILE_TYPE_VOICE = "VOICE";
+    public static final String CHAT_FILE_TYPE_CONTACT = "CONTENT";
     public static final String CHAT_FILE_TYPE_LINK = "LINK";
 }

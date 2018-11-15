@@ -12,6 +12,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,15 +30,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import mina.king.com.minachat.ClientMina;
+import mina.king.com.minachat.contract.ChatScreenContract;
+import mina.king.com.minachat.model.MsgCodeModel;
+import mina.king.com.minachat.presenter.ChatScreenPresenter;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.adapter.ChatAdapter;
 import mina.king.com.minademo.adapter.CommonFragmentPagerAdapter;
 import mina.king.com.minademo.enity.FullImageInfo;
 import mina.king.com.minademo.enity.Link;
-import mina.king.com.minademo.enity.MessageInfo;
+import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minademo.ui.fragment.ChatEmotionFragment;
 import mina.king.com.minademo.ui.fragment.ChatFunctionFragment;
-import mina.king.com.minademo.util.Constants;
+import mina.king.com.minachat.utils.Constants;
 import mina.king.com.minademo.util.GlobalOnItemClickManagerUtils;
 import mina.king.com.minademo.util.MediaManager;
 import mina.king.com.minademo.util.MessageCenter;
@@ -52,7 +57,8 @@ import mina.king.com.minademo.widget.StateButton;
  * @date 2018.11.14
  */
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements
+        ChatScreenContract.View {
     RecyclerView chatList;
     ImageView emotionVoice;
     EditText editText;
@@ -77,6 +83,9 @@ public class ChatActivity extends AppCompatActivity {
     int res = 0;
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
+    //聊天数据
+    private String TAG = "mina";
+    protected ChatScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,13 @@ public class ChatActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         initWidget();
         handleIncomeAction();
+        //聊天初始化
+        initMina();
+    }
+
+    private void initMina() {
+        presenter = ChatScreenPresenter.getInstans(this);
+        ClientMina.getIntrans();
     }
 
     private void findViewByIds() {
@@ -321,15 +337,19 @@ public class ChatActivity extends AppCompatActivity {
 
         chatAdapter.addAll(messageInfos);
     }
-
+    // TODO: 2018/11/14  消息处理
+    /**
+     * 消息处理
+     * @param messageInfo
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
         messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+        presenter.sendTextMsg("0001",Constants.CHAT_FILE_TYPE_TEXT,"",messageInfo.getContent());
         messageInfos.add(messageInfo);
         chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-//        chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -337,18 +357,19 @@ public class ChatActivity extends AppCompatActivity {
                 chatAdapter.notifyDataSetChanged();
             }
         }, 2000);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                MessageInfo message = new MessageInfo();
-                message.setContent("这是模拟消息回复");
-                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-                messageInfos.add(message);
-                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-            }
-        }, 3000);
+        //
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                MessageInfo message = new MessageInfo();
+//                message.setContent("这是模拟消息回复");
+//                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+//                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+//                messageInfos.add(message);
+//                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
+//                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
+//            }
+//        }, 3000);
     }
 
     @Override
@@ -363,5 +384,31 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void msgSuccessStatus(Object message) {
+        MsgCodeModel model = (MsgCodeModel) message;
+        Log.e(TAG, "msgSuccessStatus22: "+ model.getHeader());
+        Log.e(TAG, "msgSuccessStatus22: "+ new String(model.getBody()));
+    }
+
+    @Override
+    public void receivedMsg(final MessageInfo bean) {
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                MessageInfo message = bean;
+//                message.setContent("这是模拟消息回复");
+//                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+                messageInfos.add(message);
+                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
+                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
+                chatAdapter.notifyDataSetChanged();
+            }
+        }, 3000);
+
     }
 }

@@ -1,6 +1,5 @@
 package mina.king.com.minachat.presenter;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -8,12 +7,13 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-
 import mina.king.com.minachat.ClientMina;
+import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minachat.contract.ChatScreenContract;
 import mina.king.com.minachat.model.ChatScreenModel;
 import mina.king.com.minachat.model.EditDataModel;
 import mina.king.com.minachat.model.MsgCodeModel;
+import mina.king.com.minachat.utils.Constants;
 
 /**
  * Created by king on 2018/3/28.
@@ -68,90 +68,17 @@ public class ChatScreenPresenter {
             public void receivedMsg(MsgCodeModel message) {
                 String msgType = null;
                 try {
-                    JSONObject contentJson = new JSONObject(message.getHeader());
-                    msgType = contentJson.getString("msgType");
+                    JSONObject headerJson = new JSONObject(message.getHeader());
+                    MessageInfo messageInfo = new MessageInfo();
+                    messageInfo.setContent(new String(message.getBody()));
+                    messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                    mView.receivedMsg(messageInfo);
+
                     Log.e("TAG", "receivedMsg: "+new String(message.getBody()) );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (jdbcInsert != null) {
-                    jdbcInsert.heartCallback(message);
-                }
-                if (!TextUtils.isEmpty(msgType)) {
-                    switch (msgType) {
-                        case "10":
-                            break;
-//                        case "11":
-//                            ChatDialogueBean model = new ChatDialogueBean();
-//                            model.itemType = RoleUtils.TEXT_LEFT;//代表对方
-//                            model.textContent = new String(message.getBody());
-//                            mView.receivedMsg(model);
-//                            //回掉 message
-//                            if (jdbcInsert != null) {
-//                                jdbcInsert.MessageCallback(message,RoleUtils.TEXT_LEFT);
-//                            }
-//                            break;
-//                        case "21":
-//                            ChatDialogueBean image = new ChatDialogueBean();
-//                            image.itemType = RoleUtils.IMG_LEFT;//代表对方
-//                            image.file = message.getBody();
-//                            image.bitmap = BitmapFactory.decodeByteArray(message.getBody(), 0, message.getBody().length);
-//                            writeSD(image.file, "21", image, message);
-//                            break;
-//                        case "22":
-//                            ChatDialogueBean voice = new ChatDialogueBean();
-//                            voice.itemType = RoleUtils.VOICE_LEFT;//代表对方
-//                            voice.file = message.getBody();
-//                            writeSD(voice.file, "22", voice, message);
-//                            break;
-//                        case "31":
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(new String(message.getBody()));
-//                                Log.e("TAG", "receivedMsg: " + jsonObject);
-//                                ChatDialogueBean plan = new ChatDialogueBean();
-//                                plan.itemType = RoleUtils.PLAN_LEFT;//代表对方
-//                                plan.setCJHJJ(jsonObject.optString("CJHJJ"));
-//                                plan.setCJKFABT(jsonObject.optString("CJKFABT"));
-//                                plan.setCYSMC(jsonObject.optString("CYSMC"));
-//                                plan.setDCREATTIME(jsonObject.optString("DCREATTIME"));
-//                                plan.setCBM(jsonObject.optString("CBM"));
-//                                plan.setCYSBM(jsonObject.optString("CYSBM"));
-//                                plan.setCYSFABM(jsonObject.optString("CYSFABM"));
-//                                mView.receivedMsg(plan);
-//                                //回掉 message
-//                                if (jdbcInsert != null) {
-//                                    jdbcInsert.MessageCallback(message,RoleUtils.PLAN_LEFT);
-//                                }
-//                                //回掉 message
-//                                if (callback != null) {
-//                                    callback.healthPlan(
-//                                            jsonObject.optString("CYSBM"),
-//                                            UserInfoCache.getUserInfo(UserInfoCache.USER_PERSONALDOC) + "",
-//                                            jsonObject.optString("CYSFABM"),
-//                                            jsonObject.optString("1"),
-//                                            jsonObject.optString("CBM")
-//                                    );
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            break;
-                        case "41":
-                            if (callback != null) {
-                                callback.message(new String(message.getBody()));
-                            }
-                            break;
-                        case "42":
-                            if (callback != null) {
-                                callback.bloodMessage(new String(message.getBody()));
-                            }
-                            break;
-                        case "43":
-                            Log.e("messageSent", "receivedMsg43: " + message.getBody().length);
-                            break;
 
-                    }
-                }
             }
         });
     }
@@ -209,58 +136,40 @@ public class ChatScreenPresenter {
 //
 //    }
 
-
     /**
-     * @param CYSBM //医生编号
-     * @param CHZBM //患者编号
-     * @param CBM   //健康方案编号
-     * @param type  //发送类型 1.医生健康管理方案 2系统健康管理方案
+     *
+     * @param receiver
+     * @param msgTyp TEXT
+     * @param fileName
+     * @param msg
      */
-    private void sendServer(String CYSBM, String CHZBM, String CBM, String type) {
-
-    }
-
     public void sendTextMsg(Object receiver, Object msgTyp, Object fileName, String msg) {
         mModel.sendTextMsg(mView, mSender, receiver, msgTyp, fileName, msg);
     }
 
+    /**
+     *
+     * @param receiver
+     * @param msgTyp IMAGHE
+     * @param fileName
+     * @param msg
+     */
     public void sendPicMsg(Object receiver, Object msgTyp, Object fileName, File msg) {
         mModel.sendPicMsg(mView, mSender, receiver, msgTyp, fileName, msg);
     }
+
+    /**
+     *
+     * @param receiver
+     * @param msgTyp VOICE
+     * @param fileName
+     * @param voiceFile
+     */
 
     public void sendVoiceMsg(Object receiver, Object msgTyp, Object fileName, File voiceFile) {
         mModel.sendVoiceMsg(mView, mSender, receiver, msgTyp, fileName, voiceFile);
     }
 
-    public void sendPlanMsg(Object receiver, Object msgTyp, Object fileName, String json) {
-        mModel.sendPlanMsg(mView, mSender, receiver, msgTyp, fileName, json);
-    }
-
-    private MessageCallback callback;
-    private JdbcInsert jdbcInsert;
-
-    public void setJdbcInsert(JdbcInsert jdbcInsert) {
-        this.jdbcInsert = jdbcInsert;
-    }
-
-    public void setCallback(MessageCallback callback) {
-        this.callback = callback;
-    }
-
-    public interface MessageCallback {
-        void message(String json);
-        void bloodMessage(String json);
-
-        void healthPlan(String CYSBM, String CHZBM, String CBM, String type, String CYSFABM);
-    }
-
-    public interface JdbcInsert {
-        void MessageCallback(MsgCodeModel message, int type);
-
-        void MessageCallback(MsgCodeModel message, String url, int type);
-
-        void heartCallback(MsgCodeModel message);
-    }
 
     public void closeClient() {
         if (mSendDataPresenter != null) {

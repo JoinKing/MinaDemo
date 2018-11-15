@@ -24,9 +24,9 @@ import android.widget.TextView;
 import org.greenrobot.eventbus.EventBus;
 
 import mina.king.com.minademo.R;
-import mina.king.com.minademo.enity.MessageInfo;
+import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minademo.util.AudioRecorderUtils;
-import mina.king.com.minademo.util.Constants;
+import mina.king.com.minachat.utils.Constants;
 import mina.king.com.minademo.util.PopupWindowFactory;
 import mina.king.com.minademo.util.Utils;
 

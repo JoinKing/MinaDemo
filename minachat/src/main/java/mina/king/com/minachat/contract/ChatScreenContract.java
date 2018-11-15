@@ -2,7 +2,7 @@ package mina.king.com.minachat.contract;
 
 import java.io.File;
 
-import mina.king.com.minachat.beans.ChatDialogueBean;
+import mina.king.com.minachat.beans.MessageInfo;
 
 
 /**
@@ -12,7 +12,7 @@ import mina.king.com.minachat.beans.ChatDialogueBean;
 public interface ChatScreenContract {
     interface View{
         void msgSuccessStatus(Object message);
-        void receivedMsg(ChatDialogueBean bean);
+        void receivedMsg(MessageInfo bean);
     }
     interface Model{
        void sendTextMsg(View showView, Object sender, Object receiver, Object msgTyp, Object fileName, String msg);

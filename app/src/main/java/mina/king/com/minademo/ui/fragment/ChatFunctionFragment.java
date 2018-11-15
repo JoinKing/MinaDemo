@@ -27,9 +27,9 @@ import java.io.File;
 
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.base.BaseFragment;
-import mina.king.com.minademo.enity.MessageInfo;
+import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minademo.ui.activity.ContactActivity;
-import mina.king.com.minademo.util.Constants;
+import mina.king.com.minachat.utils.Constants;
 import mina.king.com.minademo.util.FileUtils;
 import mina.king.com.minademo.util.PhotoUtils;
 

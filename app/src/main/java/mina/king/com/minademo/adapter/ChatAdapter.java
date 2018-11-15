@@ -12,8 +12,8 @@ import java.util.List;
 import mina.king.com.minademo.adapter.holder.BaseViewHolder;
 import mina.king.com.minademo.adapter.holder.ChatAcceptViewHolder;
 import mina.king.com.minademo.adapter.holder.ChatSendViewHolder;
-import mina.king.com.minademo.enity.MessageInfo;
-import mina.king.com.minademo.util.Constants;
+import mina.king.com.minachat.beans.MessageInfo;
+import mina.king.com.minachat.utils.Constants;
 
 /**
  * Created by king

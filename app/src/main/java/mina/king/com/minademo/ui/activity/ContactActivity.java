@@ -27,8 +27,8 @@ import java.util.List;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.adapter.ContactAdapter;
 import mina.king.com.minademo.enity.IMContact;
-import mina.king.com.minademo.enity.MessageInfo;
-import mina.king.com.minademo.util.Constants;
+import mina.king.com.minachat.beans.MessageInfo;
+import mina.king.com.minachat.utils.Constants;
 
 
 public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnContactClickListener {

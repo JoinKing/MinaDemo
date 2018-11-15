@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.labo.kaji.relativepopupwindow.RelativePopupWindow;
 
 import mina.king.com.minademo.R;
-import mina.king.com.minademo.enity.MessageInfo;
+import mina.king.com.minachat.beans.MessageInfo;
 
 
 /**
