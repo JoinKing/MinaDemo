@@ -25,11 +25,10 @@ public class ClientHandler extends IoHandlerAdapter{
     public void messageReceived(IoSession session, Object message) throws Exception {
         super.messageReceived(session, message);
         MsgCodeModel model = (MsgCodeModel) message;
-        Log.e("dsd", "messageReceived: "+new String(model.getBody()) );
         if (handlerCallback != null){
             handlerCallback.receivedMsg(model);
         }else {
-            Log.e("msg", "==null: " );
+            Log.e("msg", "==null:数据回调失败 " );
         }
     }
 

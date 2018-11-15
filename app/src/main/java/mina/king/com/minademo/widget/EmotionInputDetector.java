@@ -1,5 +1,6 @@
 package mina.king.com.minademo.widget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -23,6 +24,9 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import mina.king.com.minachat.ClientMina;
+import mina.king.com.minachat.contract.ChatScreenContract;
+import mina.king.com.minachat.presenter.ChatScreenPresenter;
 import mina.king.com.minademo.R;
 import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minademo.util.AudioRecorderUtils;
@@ -31,11 +35,12 @@ import mina.king.com.minademo.util.PopupWindowFactory;
 import mina.king.com.minademo.util.Utils;
 
 /**
+ * 聊天UI事件 消息处理
  * Created by king
  * @date 2018.11.14
  */
 
-public class EmotionInputDetector {
+public class EmotionInputDetector implements ChatScreenContract.View {
     private static final String TAG = "EmotionInputDetector";
     private static final String SHARE_PREFERENCE_NAME = "com.dss886.emotioninputdetector";
     private static final String SHARE_PREFERENCE_TAG = "soft_input_height";
@@ -56,11 +61,15 @@ public class EmotionInputDetector {
     private AudioRecorderUtils mAudioRecorderUtils;
     private PopupWindowFactory mVoicePop;
     private TextView mPopVoiceText;
+    private  ChatScreenPresenter presenter;
 
     private EmotionInputDetector() {
+        presenter = ChatScreenPresenter.getInstans(this);
+        ClientMina.getIntrans();
     }
 
     public static EmotionInputDetector with(Activity activity) {
+
         EmotionInputDetector emotionInputDetector = new EmotionInputDetector();
         emotionInputDetector.mActivity = activity;
         emotionInputDetector.mInputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -73,6 +82,7 @@ public class EmotionInputDetector {
         return this;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public EmotionInputDetector bindToEditText(EditText editText) {
         mEditText = editText;
         mEditText.requestFocus();
@@ -191,9 +201,13 @@ public class EmotionInputDetector {
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
+                messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+                messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+                messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 messageInfo.setContent(mEditText.getText().toString());
                 messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
                 EventBus.getDefault().post(messageInfo);
+                presenter.sendTextMsg("0001",Constants.CHAT_FILE_TYPE_TEXT,"",messageInfo.getContent());
                 mEditText.setText("");
             }
         });
@@ -222,6 +236,7 @@ public class EmotionInputDetector {
         return this;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public EmotionInputDetector bindToVoiceText(TextView voiceText) {
         mVoiceText = voiceText;
         mVoiceText.setOnTouchListener(new View.OnTouchListener() {
@@ -432,4 +447,17 @@ public class EmotionInputDetector {
         }
     }
 
+    @Override
+    public void msgSuccessStatus(Object message) {
+
+    }
+
+    @Override
+    public void receivedMsg(MessageInfo message) {
+        message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+        message.setSendState(Constants.CHAT_ITEM_SENDING);
+        EventBus.getDefault().post(message);
+        Log.e(TAG, "receivedMsg: "+message );
+
+    }
 }

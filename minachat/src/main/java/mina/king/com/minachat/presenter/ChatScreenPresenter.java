@@ -66,15 +66,13 @@ public class ChatScreenPresenter {
         mSendDataPresenter.getmClientMina().setMsg(new ClientMina.ReceivedMsg() {
             @Override
             public void receivedMsg(MsgCodeModel message) {
-                String msgType = null;
                 try {
                     JSONObject headerJson = new JSONObject(message.getHeader());
                     MessageInfo messageInfo = new MessageInfo();
                     messageInfo.setContent(new String(message.getBody()));
-                    messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                    messageInfo.setFileType(headerJson.optString("msgType"));
+                    messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
                     mView.receivedMsg(messageInfo);
-
-                    Log.e("TAG", "receivedMsg: "+new String(message.getBody()) );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

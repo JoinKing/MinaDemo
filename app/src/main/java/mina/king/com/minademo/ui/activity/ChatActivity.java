@@ -85,7 +85,7 @@ public class ChatActivity extends AppCompatActivity implements
     private ImageView animView;
     //聊天数据
     private String TAG = "mina";
-    protected ChatScreenPresenter presenter;
+//    protected ChatScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +100,8 @@ public class ChatActivity extends AppCompatActivity implements
     }
 
     private void initMina() {
-        presenter = ChatScreenPresenter.getInstans(this);
-        ClientMina.getIntrans();
+//        presenter = ChatScreenPresenter.getInstans(this);
+//        ClientMina.getIntrans();
     }
 
     private void findViewByIds() {
@@ -311,29 +311,29 @@ public class ChatActivity extends AppCompatActivity implements
         messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
         messageInfos.add(messageInfo);
 
-        MessageInfo messageInfo1 = new MessageInfo();
-        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-        messageInfo1.setVoiceTime(3000);
-        messageInfo1.setFileType(Constants.CHAT_FILE_TYPE_VOICE);
-        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo1);
-
-        MessageInfo messageInfo2 = new MessageInfo();
-        messageInfo2.setFilepath("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-        messageInfo2.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
-        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-        messageInfo2.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-        messageInfos.add(messageInfo2);
-
-        MessageInfo messageInfo3 = new MessageInfo();
-        messageInfo3.setContent("[微笑][色][色][色]");
-        messageInfo3.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo3);
+//        MessageInfo messageInfo1 = new MessageInfo();
+//        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
+//        messageInfo1.setVoiceTime(3000);
+//        messageInfo1.setFileType(Constants.CHAT_FILE_TYPE_VOICE);
+//        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+//        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+//        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+//        messageInfos.add(messageInfo1);
+//
+//        MessageInfo messageInfo2 = new MessageInfo();
+//        messageInfo2.setFilepath("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
+//        messageInfo2.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
+//        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//        messageInfo2.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+//        messageInfos.add(messageInfo2);
+//
+//        MessageInfo messageInfo3 = new MessageInfo();
+//        messageInfo3.setContent("[微笑][色][色][色]");
+//        messageInfo3.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+//        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+//        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
+//        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+//        messageInfos.add(messageInfo3);
 
         chatAdapter.addAll(messageInfos);
     }
@@ -344,10 +344,6 @@ public class ChatActivity extends AppCompatActivity implements
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
-        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
-        presenter.sendTextMsg("0001",Constants.CHAT_FILE_TYPE_TEXT,"",messageInfo.getContent());
         messageInfos.add(messageInfo);
         chatAdapter.notifyItemInserted(messageInfos.size() - 1);
         chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
@@ -356,7 +352,7 @@ public class ChatActivity extends AppCompatActivity implements
                 messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
                 chatAdapter.notifyDataSetChanged();
             }
-        }, 2000);
+        }, 1000);
         //
 //        new Handler().postDelayed(new Runnable() {
 //            public void run() {
@@ -389,26 +385,23 @@ public class ChatActivity extends AppCompatActivity implements
     @Override
     public void msgSuccessStatus(Object message) {
         MsgCodeModel model = (MsgCodeModel) message;
-        Log.e(TAG, "msgSuccessStatus22: "+ model.getHeader());
-        Log.e(TAG, "msgSuccessStatus22: "+ new String(model.getBody()));
     }
 
     @Override
     public void receivedMsg(final MessageInfo bean) {
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                MessageInfo message = bean;
-//                message.setContent("这是模拟消息回复");
-//                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-                messageInfos.add(message);
-                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-                chatAdapter.notifyDataSetChanged();
-            }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                MessageInfo message = bean;
+////                message.setContent("这是模拟消息回复");
+////                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+//                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+//                messageInfos.add(message);
+//                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
+//                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
+//                chatAdapter.notifyDataSetChanged();
+//            }
+//        }, 3000);
 
     }
 }

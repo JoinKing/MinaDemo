@@ -12,7 +12,7 @@ import mina.king.com.minachat.beans.MessageInfo;
 public interface ChatScreenContract {
     interface View{
         void msgSuccessStatus(Object message);
-        void receivedMsg(MessageInfo bean);
+        void receivedMsg(MessageInfo message);
     }
     interface Model{
        void sendTextMsg(View showView, Object sender, Object receiver, Object msgTyp, Object fileName, String msg);

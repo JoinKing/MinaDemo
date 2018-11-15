@@ -53,8 +53,6 @@ public class ChatFunctionFragment extends BaseFragment {
 
     private int output_X = 480;
     private int output_Y = 480;
-    //    private File output;
-//    private Uri imageUri;
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
     private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
     private Uri imageUri;
@@ -81,7 +79,6 @@ public class ChatFunctionFragment extends BaseFragment {
     }
 
     private void autoObtainCameraPermission() {
-
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 

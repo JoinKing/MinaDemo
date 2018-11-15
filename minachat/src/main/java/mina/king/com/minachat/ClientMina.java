@@ -4,13 +4,18 @@ import android.util.Log;
 
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoConnector;
+import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.keepalive.KeepAliveFilter;
+import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
+import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import java.net.InetSocketAddress;
 
 import mina.king.com.minachat.factory.CodingProtocol;
+import mina.king.com.minachat.factory.KeepAliveMessageFactoryImpl;
 import mina.king.com.minachat.handler.ClientHandler;
 import mina.king.com.minachat.listener.MinaIoServiceListener;
 import mina.king.com.minachat.model.EditDataModel;
@@ -85,6 +90,10 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
             System.out.println(102);
             // 添加过滤器
             connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new CodingProtocol()));
+
+            connector.getSessionConfig().setReadBufferSize(2048);
+            // 读写通道10秒内无操作进入空闲状态
+            connector.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
             System.out.println(110);
             connector.setHandler(clientHandler);
             System.out.println(111);
@@ -93,7 +102,7 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
             // 监听客户端是否断线
             connector.addListener(new MinaIoServiceListener(){
                 @Override
-                public void sessionDestroyed(IoSession session) {
+                public void sessionDestroyed(IoSession session1) {
                     try {
                         int failCount = 0;
                         while (true) {
@@ -140,7 +149,6 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
                     connectStatus = CONNECT_SUCCESSFUL;
                 } else {
                     System.out.println("写数据失败");
-                    connectStatus = CONNECT_FAILURE;
                 }
                 System.out.println(11);
             } catch (Exception e) {
@@ -194,7 +202,6 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
      */
     @Override
     public void receivedMsg(MsgCodeModel message) {
-        Log.e(TAG, "receivedMsg: " );
         if (null != msg) {
             msg.receivedMsg(message);
         }
@@ -207,7 +214,6 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
      */
     @Override
     public void successStatus(Object state) {
-        Log.e(TAG, "receivedMsg: " );
         if (null != status) {
             status.successStatus(state);
         }
