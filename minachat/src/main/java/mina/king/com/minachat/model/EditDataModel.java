@@ -25,34 +25,34 @@ public class EditDataModel {
         return model;
     }
     public IoBuffer sendData(Object senderFirst){//首次跟后台建立连接
-        HashMap<String,Object> json1 = new HashMap<>();
-        json1.put("sender",senderFirst);
-        json1.put("receiver","");
-        json1.put("msgType","1");
-        json1.put("fileName","");
-        json1.put("bodyLength",0);
-        JSONObject jsonObject1 = new JSONObject(json1);
+        HashMap<String,Object> json = new HashMap<>();
+        json.put("sender",senderFirst);
+        json.put("receiver","");
+        json.put("msgType","1");
+        json.put("viceTime","");
+        json.put("bodyLength",0);
+        JSONObject jsonObject = new JSONObject(json);
 
-        byte[] jsonByte1 = jsonObject1.toString().getBytes();
+        byte[] jsonByte = jsonObject.toString().getBytes();
 
-        int jsonByteLength1 = jsonByte1.length;
+        int jsonByteLength1 = jsonByte.length;
 
         byte[] jsonLengthByte1 = ByteUtils.intToByteArray(jsonByteLength1);
 
-        byte[] all = ByteUtils.unitByteArray(jsonLengthByte1,jsonByte1);
+        byte[] all = ByteUtils.unitByteArray(jsonLengthByte1,jsonByte);
 
         IoBuffer buffer1 = IoBuffer.allocate(all.length).put(all,0,all.length);
         buffer1.flip();
         return buffer1;
     }
 
-    public IoBuffer sendData(Object sender,Object receiver,Object msgTyp,Object fileName,byte[] body){
+    public IoBuffer sendData(Object sender,Object receiver,Object msgTyp,Object viceTime,byte[] body){
         int bodyLength = body.length;
         HashMap<String,Object> contentMap = new HashMap<>();
         contentMap.put("sender", sender);
         contentMap.put("receiver",receiver);
         contentMap.put("msgType",msgTyp);
-        contentMap.put("fileName",fileName);
+        contentMap.put("viceTime",viceTime);
         contentMap.put("bodyLength",bodyLength);
 
         JSONObject jsonObject = new JSONObject(contentMap);

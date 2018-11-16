@@ -20,13 +20,13 @@ import mina.king.com.minachat.presenter.ChatScreenPresenter;
 public class ChatScreenModel implements ChatScreenContract.Model {
 
     @Override
-    public void sendTextMsg(final ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object fileName, final String msg) {
-        IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, fileName, msg.getBytes());
+    public void sendTextMsg(final ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, long time, final String msg) {
+        IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, time, msg.getBytes());
         ChatScreenPresenter.mSendDataPresenter.sendOBDData(ioBuffer);
     }
 
     @Override
-    public void sendPicMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object fileName, File msg) {
+    public void sendPicMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object viceTime, File msg) {
         try {
             FileInputStream fis = new FileInputStream(msg);
             ByteArrayOutputStream bos = new ByteArrayOutputStream((int) msg.length());
@@ -37,7 +37,7 @@ public class ChatScreenModel implements ChatScreenContract.Model {
             }
             fis.close();
             byte[] data = bos.toByteArray();
-            IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, fileName, data);
+            IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, viceTime, data);
             ChatScreenPresenter.mSendDataPresenter.sendOBDData(ioBuffer);
             bos.close();
         } catch (FileNotFoundException e) {
@@ -48,7 +48,7 @@ public class ChatScreenModel implements ChatScreenContract.Model {
     }
 
     @Override
-    public void sendVoiceMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object fileName, File voiceFile) {
+    public void sendVoiceMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, long time, File voiceFile) {
         try {
             FileInputStream fis = new FileInputStream(voiceFile);
             ByteArrayOutputStream bos = new ByteArrayOutputStream((int) voiceFile.length());
@@ -59,7 +59,7 @@ public class ChatScreenModel implements ChatScreenContract.Model {
             }
             fis.close();
             byte[] data = bos.toByteArray();
-            IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, fileName, data);
+            IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, time, data);
             ChatScreenPresenter.mSendDataPresenter.sendOBDData(ioBuffer);
             bos.close();
         } catch (FileNotFoundException e) {
@@ -70,8 +70,8 @@ public class ChatScreenModel implements ChatScreenContract.Model {
     }
 
     @Override
-    public void sendPlanMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object fileName, String json) {
-        IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, fileName, json.getBytes());
+    public void sendPlanMsg(ChatScreenContract.View showView, Object sender, Object receiver, Object msgTyp, Object viceTime, String json) {
+        IoBuffer ioBuffer = ChatScreenPresenter.mEditDataModel.sendData(sender, receiver, msgTyp, viceTime, json.getBytes());
         ChatScreenPresenter.mSendDataPresenter.sendOBDData(ioBuffer);
     }
 

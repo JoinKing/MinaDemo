@@ -24,11 +24,16 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+
 import mina.king.com.minachat.ClientMina;
 import mina.king.com.minachat.contract.ChatScreenContract;
 import mina.king.com.minachat.presenter.ChatScreenPresenter;
+import mina.king.com.minachat.utils.IpUtils;
 import mina.king.com.minademo.R;
 import mina.king.com.minachat.beans.MessageInfo;
+import mina.king.com.minademo.base.MessageSuccess;
+import mina.king.com.minademo.ui.fragment.ChatFunctionFragment;
 import mina.king.com.minademo.util.AudioRecorderUtils;
 import mina.king.com.minachat.utils.Constants;
 import mina.king.com.minademo.util.PopupWindowFactory;
@@ -40,11 +45,13 @@ import mina.king.com.minademo.util.Utils;
  * @date 2018.11.14
  */
 
-public class EmotionInputDetector implements ChatScreenContract.View {
+public class EmotionInputDetector implements
+        ChatScreenContract.View,
+        ChatFunctionFragment.imageCallback{
     private static final String TAG = "EmotionInputDetector";
     private static final String SHARE_PREFERENCE_NAME = "com.dss886.emotioninputdetector";
     private static final String SHARE_PREFERENCE_TAG = "soft_input_height";
-
+    private ChatFunctionFragment chatFunctionFragment;
     private Activity mActivity;
     private InputMethodManager mInputManager;
     private SharedPreferences sp;
@@ -64,9 +71,11 @@ public class EmotionInputDetector implements ChatScreenContract.View {
     private  ChatScreenPresenter presenter;
 
     private EmotionInputDetector() {
-        presenter = ChatScreenPresenter.getInstans(this);
+        //聊天初始化
         ClientMina.getIntrans();
+        presenter = ChatScreenPresenter.getInstans(this);
     }
+
 
     public static EmotionInputDetector with(Activity activity) {
 
@@ -204,10 +213,10 @@ public class EmotionInputDetector implements ChatScreenContract.View {
                 messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
-                messageInfo.setContent(mEditText.getText().toString());
+                messageInfo.setContent(mEditText.getText().toString().trim());
                 messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
                 EventBus.getDefault().post(messageInfo);
-                presenter.sendTextMsg("0001",Constants.CHAT_FILE_TYPE_TEXT,"",messageInfo.getContent());
+                presenter.sendTextMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_TEXT,0,messageInfo.getContent());
                 mEditText.setText("");
             }
         });
@@ -304,6 +313,13 @@ public class EmotionInputDetector implements ChatScreenContract.View {
         return this;
     }
 
+
+    public EmotionInputDetector setChatFunctionFragment(ChatFunctionFragment functionFragment){
+        this.chatFunctionFragment = functionFragment;
+        chatFunctionFragment.setCallback(this);
+        return this;
+    }
+
     public EmotionInputDetector setViewPager(ViewPager viewPager) {
         mViewPager = viewPager;
         return this;
@@ -337,10 +353,16 @@ public class EmotionInputDetector implements ChatScreenContract.View {
             public void onStop(long time, String filePath) {
                 mTextView.setText(Utils.long2String(0));
                 MessageInfo messageInfo = new MessageInfo();
+                messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+                messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setFileType(Constants.CHAT_FILE_TYPE_VOICE);
                 messageInfo.setFilepath(filePath);
+                messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 messageInfo.setVoiceTime(time);
+                Log.e(TAG, "onStop: "+time );
                 EventBus.getDefault().post(messageInfo);
+                presenter.sendVoiceMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_VOICE,time,new File(filePath));
+
             }
 
             @Override
@@ -447,17 +469,26 @@ public class EmotionInputDetector implements ChatScreenContract.View {
         }
     }
 
+    //发送消息
     @Override
     public void msgSuccessStatus(Object message) {
+        EventBus.getDefault().post(new MessageSuccess("TEXT"));
+    }
+    /**
+     * 接收消息
+     * @param message
+     */
+    @Override
+    public void receivedMsg(MessageInfo message) {
+        Log.e(TAG, "receivedMsg: "+message );
+        EventBus.getDefault().post(message);
 
     }
 
     @Override
-    public void receivedMsg(MessageInfo message) {
-        message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-        message.setSendState(Constants.CHAT_ITEM_SENDING);
-        EventBus.getDefault().post(message);
-        Log.e(TAG, "receivedMsg: "+message );
+    public void getFile(File file) {
+        Log.e(TAG, "getFile: "+file.getAbsolutePath() );
+        presenter.sendPicMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_IMAGE,"",file);
 
     }
 }

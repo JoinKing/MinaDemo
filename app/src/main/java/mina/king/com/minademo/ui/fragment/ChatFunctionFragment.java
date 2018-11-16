@@ -25,6 +25,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
+import mina.king.com.minachat.contract.ChatScreenContract;
+import mina.king.com.minachat.presenter.ChatScreenPresenter;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.base.BaseFragment;
 import mina.king.com.minachat.beans.MessageInfo;
@@ -193,11 +195,20 @@ public class ChatFunctionFragment extends BaseFragment {
     public void onActivityResult(int req, int res, Intent data) {
         switch (req) {
             case CODE_TAKE_PHOTO:
-                if (res == Activity.RESULT_OK) {
+                if (res == Activity.RESULT_OK) {//相机路径
                     MessageInfo messageInfo = new MessageInfo();
+                    messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+                    messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                     messageInfo.setFilepath(fileUri.getAbsolutePath());
                     messageInfo.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
-                    EventBus.getDefault().post(messageInfo);
+
+                    File file = new File(messageInfo.getFilepath());
+                    EventBus.getDefault().post(messageInfo);//发送图片
+
+                    if (callback!=null){
+                        callback.getFile(file);
+                    }
+
                 }
 
                 break;
@@ -205,10 +216,14 @@ public class ChatFunctionFragment extends BaseFragment {
                 if (res == Activity.RESULT_OK) {
                     try {
                         MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+                        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setFilepath(cropImageUri.getPath());
                         messageInfo.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
+                        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                         EventBus.getDefault().post(messageInfo);
                     } catch (Exception e) {
+
                     }
                 } else {
                     Log.d(Constants.TAG, "失败");
@@ -216,14 +231,20 @@ public class ChatFunctionFragment extends BaseFragment {
 
                 break;
             case REQUEST_CODE_PICK_IMAGE:
-                if (res == Activity.RESULT_OK) {
+                if (res == Activity.RESULT_OK) {//相册路径
                     try {
-
                         Uri uri = data.getData();
                         MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+                        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setFilepath(getImageRealPathFromURI(uri));
                         messageInfo.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
+                        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                         EventBus.getDefault().post(messageInfo);
+                        File file = new File(messageInfo.getFilepath());
+                        if (callback!=null){
+                            callback.getFile(file);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.d(Constants.TAG, e.getMessage());
@@ -239,6 +260,8 @@ public class ChatFunctionFragment extends BaseFragment {
                         Uri uri = data.getData();
                         Log.e(TAG, "onActivityResult: ->" + uri.getPath());
                         MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+                        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setFilepath(FileUtils.getFileAbsolutePath(mActivity, uri));
                         messageInfo.setFileType(Constants.CHAT_FILE_TYPE_FILE);
                         EventBus.getDefault().post(messageInfo);
@@ -298,5 +321,15 @@ public class ChatFunctionFragment extends BaseFragment {
         }
         cursor.close();
         return res;
+    }
+
+    private imageCallback callback;
+
+    public void setCallback(imageCallback callback) {
+        this.callback = callback;
+    }
+
+    public interface imageCallback{
+        void getFile(File file);
     }
 }

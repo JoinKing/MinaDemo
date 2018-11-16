@@ -37,6 +37,7 @@ import mina.king.com.minachat.presenter.ChatScreenPresenter;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.adapter.ChatAdapter;
 import mina.king.com.minademo.adapter.CommonFragmentPagerAdapter;
+import mina.king.com.minademo.base.MessageSuccess;
 import mina.king.com.minademo.enity.FullImageInfo;
 import mina.king.com.minademo.enity.Link;
 import mina.king.com.minachat.beans.MessageInfo;
@@ -54,11 +55,11 @@ import mina.king.com.minademo.widget.StateButton;
 /**
  * 聊天主界面
  * Created by king
+ *
  * @date 2018.11.14
  */
 
-public class ChatActivity extends AppCompatActivity implements
-        ChatScreenContract.View {
+public class ChatActivity extends AppCompatActivity implements ChatFunctionFragment.imageCallback {
     RecyclerView chatList;
     ImageView emotionVoice;
     EditText editText;
@@ -85,7 +86,6 @@ public class ChatActivity extends AppCompatActivity implements
     private ImageView animView;
     //聊天数据
     private String TAG = "mina";
-//    protected ChatScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,25 +95,19 @@ public class ChatActivity extends AppCompatActivity implements
         EventBus.getDefault().register(this);
         initWidget();
         handleIncomeAction();
-        //聊天初始化
-        initMina();
     }
 
-    private void initMina() {
-//        presenter = ChatScreenPresenter.getInstans(this);
-//        ClientMina.getIntrans();
-    }
 
     private void findViewByIds() {
-        chatList =  findViewById(R.id.chat_list);
-        emotionVoice =  findViewById(R.id.emotion_voice);
-        editText =  findViewById(R.id.edit_text);
+        chatList = findViewById(R.id.chat_list);
+        emotionVoice = findViewById(R.id.emotion_voice);
+        editText = findViewById(R.id.edit_text);
         voiceText = findViewById(R.id.voice_text);
-        emotionButton =  findViewById(R.id.emotion_button);
-        emotionAdd =  findViewById(R.id.emotion_add);
-        emotionSend =  findViewById(R.id.emotion_send);
-        emotionLayout =  findViewById(R.id.emotion_layout);
-        viewpager =  findViewById(R.id.viewpager);
+        emotionButton = findViewById(R.id.emotion_button);
+        emotionAdd = findViewById(R.id.emotion_add);
+        emotionSend = findViewById(R.id.emotion_send);
+        emotionLayout = findViewById(R.id.emotion_layout);
+        viewpager = findViewById(R.id.viewpager);
     }
 
     private void handleIncomeAction() {
@@ -130,12 +124,14 @@ public class ChatActivity extends AppCompatActivity implements
         chatEmotionFragment = new ChatEmotionFragment();
         fragments.add(chatEmotionFragment);
         chatFunctionFragment = new ChatFunctionFragment();
+        chatFunctionFragment.setCallback(this);
         fragments.add(chatFunctionFragment);
         adapter = new CommonFragmentPagerAdapter(getSupportFragmentManager(), fragments);
         viewpager.setAdapter(adapter);
         viewpager.setCurrentItem(0);
 
         mDetector = EmotionInputDetector.with(this)
+                .setChatFunctionFragment(chatFunctionFragment)
                 .setEmotionView(emotionLayout)
                 .setViewPager(viewpager)
                 .bindToContent(chatList)
@@ -236,7 +232,6 @@ public class ChatActivity extends AppCompatActivity implements
 
         @Override
         public void onFileClick(View view, int position) {
-
             MessageInfo messageInfo = messageInfos.get(position);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -262,7 +257,7 @@ public class ChatActivity extends AppCompatActivity implements
         @Override
         public void onLongClickImage(View view, int position) {
 
-            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(),messageInfos.get(position));
+            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(), messageInfos.get(position));
 //            chatContextMenu.setAnimationStyle();
             chatContextMenu.showOnAnchor(view, RelativePopupWindow.VerticalPosition.ABOVE,
                     RelativePopupWindow.HorizontalPosition.CENTER);
@@ -271,28 +266,28 @@ public class ChatActivity extends AppCompatActivity implements
 
         @Override
         public void onLongClickText(View view, int position) {
-            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(),messageInfos.get(position));
+            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(), messageInfos.get(position));
             chatContextMenu.showOnAnchor(view, RelativePopupWindow.VerticalPosition.ABOVE,
                     RelativePopupWindow.HorizontalPosition.CENTER);
         }
 
         @Override
         public void onLongClickItem(View view, int position) {
-            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(),messageInfos.get(position));
+            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(), messageInfos.get(position));
             chatContextMenu.showOnAnchor(view, RelativePopupWindow.VerticalPosition.ABOVE,
                     RelativePopupWindow.HorizontalPosition.CENTER);
         }
 
         @Override
         public void onLongClickFile(View view, int position) {
-            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(),messageInfos.get(position));
+            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(), messageInfos.get(position));
             chatContextMenu.showOnAnchor(view, RelativePopupWindow.VerticalPosition.ABOVE,
                     RelativePopupWindow.HorizontalPosition.CENTER);
         }
 
         @Override
         public void onLongClickLink(View view, int position) {
-            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(),messageInfos.get(position));
+            ChatContextMenu chatContextMenu = new ChatContextMenu(view.getContext(), messageInfos.get(position));
             chatContextMenu.showOnAnchor(view, RelativePopupWindow.VerticalPosition.ABOVE,
                     RelativePopupWindow.HorizontalPosition.CENTER);
         }
@@ -303,69 +298,45 @@ public class ChatActivity extends AppCompatActivity implements
      */
     private void LoadData() {
         messageInfos = new ArrayList<>();
-
         MessageInfo messageInfo = new MessageInfo();
-        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
+        messageInfo.setContent("你好，欢迎使用KING的聊天框架");
         messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
         messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
         messageInfos.add(messageInfo);
 
-//        MessageInfo messageInfo1 = new MessageInfo();
-//        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-//        messageInfo1.setVoiceTime(3000);
-//        messageInfo1.setFileType(Constants.CHAT_FILE_TYPE_VOICE);
-//        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-//        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-//        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-//        messageInfos.add(messageInfo1);
-//
-//        MessageInfo messageInfo2 = new MessageInfo();
-//        messageInfo2.setFilepath("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-//        messageInfo2.setFileType(Constants.CHAT_FILE_TYPE_IMAGE);
-//        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//        messageInfo2.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-//        messageInfos.add(messageInfo2);
-//
-//        MessageInfo messageInfo3 = new MessageInfo();
-//        messageInfo3.setContent("[微笑][色][色][色]");
-//        messageInfo3.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-//        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-//        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-//        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-//        messageInfos.add(messageInfo3);
 
         chatAdapter.addAll(messageInfos);
     }
-    // TODO: 2018/11/14  消息处理
+
     /**
-     * 消息处理
+     * EventBus 消息接收处理
+     *
      * @param messageInfo
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
+        Log.e(TAG, "MessageEventBus: "+messageInfo );
         messageInfos.add(messageInfo);
         chatAdapter.notifyItemInserted(messageInfos.size() - 1);
         chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-                chatAdapter.notifyDataSetChanged();
+        chatAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 消息发送成功的回调
+     *
+     * @param success
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void MessageSuccess(MessageSuccess success) {
+        for (int i = 0; i < messageInfos.size(); i++) {
+            if (messageInfos.get(i).getSendState() == Constants.CHAT_ITEM_SENDING) {
+                messageInfos.get(i).setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
             }
-        }, 1000);
-        //
-//        new Handler().postDelayed(new Runnable() {
-//            public void run() {
-//                MessageInfo message = new MessageInfo();
-//                message.setContent("这是模拟消息回复");
-//                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-//                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-//                messageInfos.add(message);
-//                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-//                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-//            }
-//        }, 3000);
+
+        }
+        chatAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -383,25 +354,7 @@ public class ChatActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void msgSuccessStatus(Object message) {
-        MsgCodeModel model = (MsgCodeModel) message;
-    }
-
-    @Override
-    public void receivedMsg(final MessageInfo bean) {
-//        new Handler().postDelayed(new Runnable() {
-//            public void run() {
-//                MessageInfo message = bean;
-////                message.setContent("这是模拟消息回复");
-////                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-//                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-//                messageInfos.add(message);
-//                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-//                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-//                chatAdapter.notifyDataSetChanged();
-//            }
-//        }, 3000);
+    public void getFile(File file) {
 
     }
 }

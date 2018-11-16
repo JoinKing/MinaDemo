@@ -156,8 +156,8 @@ public class ChatAcceptViewHolder extends BaseViewHolder<MessageInfo> {
                         onItemClickListener.onVoiceClick(chatItemVoice, (Integer) itemView.getTag());
                     }
                 });
-                layoutParams.width = Utils.dp2px(mContext, 120);
-                layoutParams.height = Utils.dp2px(mContext, 48);
+                layoutParams.width = Utils.dp2px(mContext, 100);
+                layoutParams.height = Utils.dp2px(mContext, 70);
                 chatItemLayoutContent.setLayoutParams(layoutParams);
                 break;
             case Constants.CHAT_FILE_TYPE_FILE:
