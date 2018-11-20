@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:background="@color/colorWhite"
+        android:background="@color/transparent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -14,17 +14,17 @@
         <TextView
             android:id="@+id/tvBack"
             android:paddingTop="@dimen/dip_20"
+            android:onClick="backFinash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dip_15"
-
+            android:drawableLeft="@mipmap/ic_back"
             android:drawablePadding="@dimen/dip_5"
             android:gravity="center_vertical"
             android:textColor="@color/color_f3f3f3"
             android:textSize="@dimen/text_size_17"
             android:visibility="visible" />
-
 
         <TextView
             android:paddingTop="@dimen/dip_20"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text=""
-            android:textColor="@color/color_333333"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_19" />
 
         <TextView

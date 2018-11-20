@@ -25,15 +25,14 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".login.view.LoginActivity">
+        <!--<activity android:name=".chat.activity.ChatActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".chat.activity.FullImageActivity"
             android:theme="@android:style/Theme.Translucent" />
@@ -53,6 +52,8 @@
             android:screenOrientation="portrait" />
         <!-- <activity android:name=".ui.activity.LoginActivity"></activity> -->
         <activity android:name=".MainActivity" />
+        <activity android:name=".login.view.RegisterActivity"/>
+        <activity android:name=".chat.activity.ChatActivity"/>
     </application>
 
 </manifest>

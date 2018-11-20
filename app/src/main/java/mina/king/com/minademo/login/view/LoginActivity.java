@@ -1,6 +1,5 @@
 package mina.king.com.minademo.login.view;
 
-
 import mina.king.com.minademo.BR;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.databinding.ActivityLoginBinding;
@@ -9,7 +8,6 @@ import ui.king.com.kinglibrary.base.BaseActivity;
 
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewModel> {
-
 
     @Override
     public int initContentView() {
@@ -23,11 +21,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
 
     @Override
     public LoginViewModel initViewModel() {
-        return new LoginViewModel(getApplication(),this);
+        return new LoginViewModel(getApplication());
     }
 
     @Override
     public void initViewObservable() {
-
+        mViewModel.setTitle(mViewModel.WRITE);
     }
 }

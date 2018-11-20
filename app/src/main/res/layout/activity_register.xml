@@ -1,63 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<layout>
     <data>
         <variable
-            name="loginVm"
-            type="mina.king.com.minademo.login.viewModel.LoginViewModel"/>
+            name="registerVM"
+            type="mina.king.com.minademo.login.viewModel.RegisterViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:background="@mipmap/bg_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ui.king.com.kinglibrary.view.BaseTitle
-            android:visibility="gone"
             android:id="@+id/icTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:centerTitle = ""
+            app:centerTitle = "注册"
             app:rightTitle = ""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:gravity="center"
-            android:id="@+id/tvPsdLogin"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/dip_100"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="@dimen/text_size_22"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintTop_toBottomOf="@id/icTitle"
-            android:text="@string/king_loginTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <EditText
-            android:addTextChangedListener="@{loginVm.phoneNumber}"
+            android:addTextChangedListener="@{registerVM.phoneNumber}"
             android:id="@+id/etInputPhoneNum"
-            android:text="@{loginVm.phone}"
+            android:text="@{registerVM.phone}"
             android:background="@null"
             android:maxLength="11"
             android:inputType="number"
             android:textSize="@dimen/text_size_16"
-            android:textColor="@color/white"
+            android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CCCCCC"
             android:layout_marginRight="@dimen/dip_25"
             android:layout_marginLeft="@dimen/dip_25"
             android:layout_marginTop="@dimen/dip_56"
-            app:layout_constraintTop_toBottomOf="@+id/tvPsdLogin"
+            app:layout_constraintTop_toBottomOf="@+id/icTitle"
             android:hint="@string/inputPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/imDelete"
-            android:visibility="@{loginVm.isShow}"
-            android:onClick="@{loginVm.deletePhoneNumber}"
+            android:visibility="@{registerVM.isShow}"
+            android:onClick="@{registerVM.deletePhoneNumber}"
             android:padding="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_15"
             app:layout_constraintRight_toRightOf="parent"
@@ -76,7 +63,7 @@
             style="@style/line_horizontal_matchParent"/>
 
         <EditText
-            android:addTextChangedListener="@{loginVm.psd}"
+            android:addTextChangedListener="@{registerVM.psd}"
             android:id="@+id/etInputCodeNum"
             android:singleLine="true"
             android:background="@null"
@@ -126,61 +113,21 @@
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/tvIfCount"
-            android:onClick="@{loginVm.loginButton}"
+            android:onClick="@{registerVM.loginButton}"
             android:layout_marginLeft="@dimen/dip_40"
             android:layout_marginRight="@dimen/dip_40"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dip_50"
-            android:text="@string/login_hint"
+            android:text="@string/regis_hint"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/text_size_18"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etCodeLine" />
 
-        <TextView
-            android:id="@+id/tvForGetPsd"
-            android:onClick="@{loginVm.forgetPsd}"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/dip_25"
-            android:layout_marginTop="@dimen/dip_12"
-            android:textSize="@dimen/text_size_16"
-            app:layout_constraintTop_toBottomOf="@+id/tvIfCount"
-            android:textColor="@color/white"
-            android:text="@string/loginForgetPsd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:id="@+id/llShortcut"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dip_50"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvForGetPsd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_marginLeft="@dimen/dip_25"
-                android:layout_weight="1"
-                style="@style/line_horizontal_matchParent"/>
-
-            <TextView
-                android:onClick="@{loginVm.register}"
-                android:layout_marginRight="@dimen/dip_20"
-                android:layout_marginLeft="@dimen/dip_20"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16"
-                android:text="@string/login_shortcut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <View
-                android:layout_marginRight="@dimen/dip_25"
-                android:layout_weight="1"
-                style="@style/line_horizontal_matchParent"/>
-        </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>
 </layout>
+

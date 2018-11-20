@@ -1,6 +1,5 @@
 package ui.king.com.kinglibrary.base;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +12,15 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 
-public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseViewModel> extends FragmentActivity {
-    private V mBinding;
-    private VM mViewModel;
-    private MyNetBroadCastReciver receiver;
+import org.zackratos.ultimatebar.UltimateBar;
+
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends FragmentActivity {
+    protected V mBinding;
+    protected VM mViewModel;
+    protected MyNetBroadCastReciver receiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +32,20 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
         setNetworkBroadcast();
         mViewModel.onCreate();
         //沉浸式
+        initTitle();
+    }
+
+    private void initTitle() {
+//        if (mViewModel.getTitle() == mViewModel.BLACK) {
+            UltimateBar ultimateBar = new UltimateBar(this);
+            ultimateBar.setImmersionBar();//沉浸式
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置状态栏字体颜色为浅色
+//        } else {
+//            UltimateBar ultimateBar = new UltimateBar(this);
+//            ultimateBar.setImmersionBar();//沉浸式
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏字体颜色为深色
+//        }
+
     }
 
     /**
@@ -57,6 +73,7 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
      * 处理livedata的订阅方法
      */
     public abstract void initViewObservable();
+
     /**
      * 设置网络监听
      */
@@ -83,10 +100,14 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
                     //连接状态 处理自己的业务逻辑
                     mViewModel.setIsNetworkAvailable(true);
                 } else {
-//                    Toast.makeText(context, "网络链接失败", Toast.LENGTH_SHORT).show();
-                    mViewModel.setIsNetworkAvailable(true);
+                    Toast.makeText(context, "网络链接失败", Toast.LENGTH_SHORT).show();
+                    mViewModel.setIsNetworkAvailable(false);
                 }
             }
         }
+    }
+
+    public void backFinash(View view) {
+        finish();
     }
 }
