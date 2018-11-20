@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
-import mina.king.com.minademo.adapter.EmotionGridViewAdapter;
+import mina.king.com.minademo.chat.adapter.EmotionGridViewAdapter;
 
 /**
  * Created by king

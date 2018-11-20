@@ -4,7 +4,6 @@ public class MessageSuccess {
     private String success;
 
 
-
     public MessageSuccess(String success) {
         this.success = success;
     }

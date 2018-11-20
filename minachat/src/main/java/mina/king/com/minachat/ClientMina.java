@@ -91,7 +91,7 @@ public class ClientMina extends Thread implements ClientHandler.ClientHandlerCal
             // 添加过滤器
             connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new CodingProtocol()));
 
-            connector.getSessionConfig().setReadBufferSize(2048);
+            connector.getSessionConfig().setReadBufferSize(1024);
             // 读写通道10秒内无操作进入空闲状态
             connector.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
             System.out.println(110);

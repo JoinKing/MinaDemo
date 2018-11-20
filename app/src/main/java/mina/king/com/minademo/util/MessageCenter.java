@@ -9,7 +9,7 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 
 import mina.king.com.minachat.utils.Constants;
-import mina.king.com.minademo.enity.Link;
+import mina.king.com.minademo.chat.enity.Link;
 import mina.king.com.minachat.beans.MessageInfo;
 
 

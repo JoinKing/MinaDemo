@@ -18,7 +18,7 @@
             />
     </LinearLayout>
 
-    <mina.king.com.minademo.widget.IndicatorView
+    <mina.king.com.minademo.chat.widget.IndicatorView
         android:id="@+id/fragment_chat_group"
         android:layout_width="match_parent"
         android:layout_height="30dp"

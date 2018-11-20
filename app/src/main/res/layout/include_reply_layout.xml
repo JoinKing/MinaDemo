@@ -73,7 +73,7 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_add" />
 
-        <mina.king.com.minademo.widget.StateButton
+        <mina.king.com.minademo.chat.widget.StateButton
             android:id="@+id/emotion_send"
             android:layout_width="40dp"
             android:layout_height="30dp"
@@ -101,7 +101,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <mina.king.com.minademo.widget.NoScrollViewPager
+        <mina.king.com.minademo.chat.widget.NoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

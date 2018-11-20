@@ -24,7 +24,7 @@
             android:layout_alignParentLeft="true"
             android:scaleType="centerCrop"/>
 
-        <mina.king.com.minademo.widget.BubbleImageView
+        <mina.king.com.minademo.chat.widget.BubbleImageView
             android:id="@+id/chat_item_content_image"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             app:arrowPosition="15dp"
             app:arrowWidth="10dp" />
 
-        <mina.king.com.minademo.widget.BubbleLinearLayout
+        <mina.king.com.minademo.chat.widget.BubbleLinearLayout
             android:id="@+id/chat_item_layout_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:arrowWidth="8dp"
             app:bubbleColor="@color/chat_accept_bg">
 
-            <mina.king.com.minademo.widget.GifTextView
+            <mina.king.com.minademo.chat.widget.GifTextView
                 android:id="@+id/chat_item_content_text"
                 style="@style/text_subhead_black"
                 android:layout_marginLeft="@dimen/content_horizontal_margin"
@@ -66,9 +66,9 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:src="@mipmap/icon_voice_left3"
                 android:visibility="gone" />
-        </mina.king.com.minademo.widget.BubbleLinearLayout>
+        </mina.king.com.minademo.chat.widget.BubbleLinearLayout>
 
-        <mina.king.com.minademo.widget.BubbleLinearLayout
+        <mina.king.com.minademo.chat.widget.BubbleLinearLayout
             android:id="@+id/chat_item_layout_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,8 +111,8 @@
                     android:layout_marginTop="4dp"
                     android:layout_toRightOf="@+id/iv_file_type" />
             </RelativeLayout>
-        </mina.king.com.minademo.widget.BubbleLinearLayout>
-        <mina.king.com.minademo.widget.BubbleLinearLayout
+        </mina.king.com.minademo.chat.widget.BubbleLinearLayout>
+        <mina.king.com.minademo.chat.widget.BubbleLinearLayout
             android:id="@+id/chat_item_layout_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -191,8 +191,8 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </mina.king.com.minademo.widget.BubbleLinearLayout>
-        <mina.king.com.minademo.widget.BubbleLinearLayout
+        </mina.king.com.minademo.chat.widget.BubbleLinearLayout>
+        <mina.king.com.minademo.chat.widget.BubbleLinearLayout
             android:id="@+id/chat_item_layout_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </mina.king.com.minademo.widget.BubbleLinearLayout>
+        </mina.king.com.minademo.chat.widget.BubbleLinearLayout>
         <TextView
             android:id="@+id/chat_item_voice_time"
             style="@style/text_body"

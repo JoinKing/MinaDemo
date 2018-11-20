@@ -142,10 +142,10 @@ public class ChatScreenPresenter {
                 File dir = new File(parent_path.getAbsoluteFile(), "MINA_CHAT");
                 dir.mkdir();
                 if (type.equals(Constants.CHAT_FILE_TYPE_IMAGE)) {
-                    files = new File(dir.getAbsoluteFile(), System.currentTimeMillis() + ".wav");
+                    files = new File(dir.getAbsoluteFile(), System.currentTimeMillis() + ".jpg");
                 }
                 if (type.equals(Constants.CHAT_FILE_TYPE_VOICE)) {
-                    files = new File(dir.getAbsoluteFile(), System.currentTimeMillis() + ".jpg");
+                    files = new File(dir.getAbsoluteFile(), System.currentTimeMillis() + ".wav");
                 }
                 // 创建这个文件，如果不存在
                 files.createNewFile();

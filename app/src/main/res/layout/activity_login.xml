@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@mipmap/bg_login"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Theme.AppCompat.NoActionBar"
-    tools:context=".ui.activity.LoginActivity">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="loginVm"
+            type="mina.king.com.minademo.login.viewModel.LoginViewModel"/>
+    </data>
 
-</RelativeLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:padding="@dimen/dip_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_login">
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:text="@{loginVm.xx}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>
