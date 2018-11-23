@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //网络请求
-    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
     //沉静式
     implementation 'org.zackratos:ultimatebar:1.0.3'
 

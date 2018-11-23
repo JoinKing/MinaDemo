@@ -110,4 +110,5 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     public void backFinash(View view) {
         finish();
     }
+
 }

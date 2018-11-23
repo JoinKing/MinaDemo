@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="registerVM"
             type="mina.king.com.minademo.login.viewModel.RegisterViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@mipmap/bg_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,7 +34,7 @@
             android:maxLength="11"
             android:inputType="number"
             android:textSize="@dimen/text_size_16"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/white"
             android:textColorHint="@color/color_CCCCCC"
             android:layout_marginRight="@dimen/dip_25"
             android:layout_marginLeft="@dimen/dip_25"
@@ -48,7 +50,7 @@
             android:padding="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_15"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPsdLogin"
+            app:layout_constraintTop_toBottomOf="@+id/icTitle"
             android:layout_marginTop="@dimen/dip_48"
             android:src="@mipmap/icon_delete"
             android:layout_width="wrap_content"
@@ -100,18 +102,77 @@
             app:layout_constraintTop_toBottomOf="@id/etInputCodeNum"
             style="@style/line_horizontal_matchParent"/>
 
+        <EditText
+            android:addTextChangedListener="@{registerVM.email}"
+            android:id="@+id/etEmail"
+            android:singleLine="true"
+            android:background="@null"
+            android:maxLength="20"
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_CCCCCC"
+            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginTop="@dimen/dip_25"
+            app:layout_constraintTop_toBottomOf="@+id/etCodeLine"
+            android:hint="@string/inputEmail"
+            android:imeOptions="actionGo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:onClick="@{registerVM.getRegisCode}"
+            android:padding="@dimen/dip_5"
+            app:layout_constraintTop_toTopOf="@+id/etEmail"
+            app:layout_constraintRight_toRightOf="@+id/etEmail"
+            android:text="获取验证码"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:id="@+id/liEmail"
+            android:layout_marginTop="@dimen/dip_16"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginRight="@dimen/dip_25"
+            app:layout_constraintTop_toBottomOf="@id/etEmail"
+            style="@style/line_horizontal_matchParent"/>
+        <EditText
+            android:id="@+id/etCode"
+            android:addTextChangedListener="@{registerVM.code}"
+            android:background="@null"
+            android:maxLength="4"
+            android:inputType="number"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_CCCCCC"
+            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginTop="@dimen/dip_25"
+            app:layout_constraintTop_toBottomOf="@+id/liEmail"
+            android:hint="@string/inputCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:id="@+id/liCode"
+            android:layout_marginTop="@dimen/dip_16"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginRight="@dimen/dip_25"
+            app:layout_constraintTop_toBottomOf="@id/etCode"
+            style="@style/line_horizontal_matchParent"/>
+
         <TextView
             android:id="@+id/tvLoginState"
             android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="@dimen/dip_25"
             android:layout_marginTop="@dimen/dip_12"
-            app:layout_constraintTop_toBottomOf="@+id/etCodeLine"
+            app:layout_constraintTop_toBottomOf="@+id/liCode"
             android:textColor="@color/color_EA7B58"
             android:text="@string/loginPassWordMisTake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
+            android:visibility="visible"
             android:id="@+id/tvIfCount"
             android:onClick="@{registerVM.loginButton}"
             android:layout_marginLeft="@dimen/dip_40"
@@ -124,10 +185,7 @@
             android:textSize="@dimen/text_size_18"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etCodeLine" />
-
-
-
+            app:layout_constraintTop_toBottomOf="@id/liCode" />
     </android.support.constraint.ConstraintLayout>
 </layout>
 

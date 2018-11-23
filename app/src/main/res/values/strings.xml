@@ -12,5 +12,9 @@
     <string name="loginPassWordMisTake">账号或密码错误，请重新输入</string>
     <string name="inputPhoneNumber">请输入手机号码</string>
     <string name="inputPsd">请输入密码</string>
-    <string name="countAndPsdIsemoty">账号或密码不能为空</string>
+    <string name="countAndPsdIsemoty">账号密码不能为空</string>
+    <string name="emailAndCodeIsemoty">邮件或验证码不能为空</string>
+    <string name="emailIsemoty">邮件不能为空</string>
+    <string name="inputEmail">请输入邮箱地址(仅限QQ或者163)</string>
+    <string name="inputCode">请输入验证码</string>
 </resources>

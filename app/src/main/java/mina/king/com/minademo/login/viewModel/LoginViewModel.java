@@ -1,11 +1,10 @@
 package mina.king.com.minademo.login.viewModel;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Observable;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableChar;
+
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
@@ -17,12 +16,20 @@ import android.widget.Toast;
 
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.chat.activity.ChatActivity;
+import mina.king.com.minademo.login.model.LoginModel;
 import mina.king.com.minademo.login.view.RegisterActivity;
+import mina.king.com.minademo.util.Api;
+import okhttp3.Call;
 import ui.king.com.kinglibrary.base.BaseViewModel;
+import ui.king.com.kinglibrary.okhttp.OkHttpUtils;
+import ui.king.com.kinglibrary.okhttp.callback.GenericsCallback;
+import ui.king.com.kinglibrary.okhttp.callback.StringCallback;
+import ui.king.com.kinglibrary.okhttp.utils.JsonGenericsSerializator;
+
 
 public class LoginViewModel extends BaseViewModel {
 
-    private Context context;
+    protected Context context;
     private String phoneNumber = "";
     private String psd = "";
     public ObservableInt isShow = new ObservableInt(View.INVISIBLE);//删除按钮的显示
@@ -91,8 +98,29 @@ public class LoginViewModel extends BaseViewModel {
             return;
         }else {
             //登录接口
-            context.startActivity(new Intent(context, ChatActivity.class));
             //缓存用户名id
+            OkHttpUtils.post()
+                    .url(Api.login)
+                    .addParams("phone",phoneNumber)
+                    .addParams("psd",psd)
+                    .build()
+                    .execute(new GenericsCallback<LoginModel>(new JsonGenericsSerializator()) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            Log.e(TAG, "onError: "+e.getMessage() );
+                        }
+
+                        @Override
+                        public void onResponse(LoginModel response, int id) {
+                            if (response.getCode()==SUCCESS){
+                                toast(response.getMsg());
+                                context.startActivity(new Intent(context, ChatActivity.class));
+                                activity.finish();
+                            }else {
+                                toast(response.getMsg());
+                            }
+                        }
+                    });
 
 
         }
@@ -118,4 +146,8 @@ public class LoginViewModel extends BaseViewModel {
         phone.set("");
     }
 
+    @Override
+    public void getAvtivity(Activity activity) {
+        super.getAvtivity(activity);
+    }
 }

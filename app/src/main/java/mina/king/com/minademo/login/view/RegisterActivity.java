@@ -7,6 +7,7 @@ import mina.king.com.minademo.login.viewModel.RegisterViewModel;
 import ui.king.com.kinglibrary.base.BaseActivity;
 
 public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterViewModel> {
+
     @Override
     public int initContentView() {
         return R.layout.activity_register;
@@ -19,11 +20,17 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public RegisterViewModel initViewModel() {
-        return new RegisterViewModel(getApplication());
+        RegisterViewModel model = new RegisterViewModel(getApplication());
+        model.setActivity(this);
+        return model;
     }
+
 
     @Override
     public void initViewObservable() {
+
         mViewModel.setTitle(mViewModel.BLACK);
     }
+
+
 }
