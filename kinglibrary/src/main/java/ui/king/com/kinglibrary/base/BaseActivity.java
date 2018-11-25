@@ -37,9 +37,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
     private void initTitle() {
 //        if (mViewModel.getTitle() == mViewModel.BLACK) {
-            UltimateBar ultimateBar = new UltimateBar(this);
-            ultimateBar.setImmersionBar();//沉浸式
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置状态栏字体颜色为浅色
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar();//沉浸式
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置状态栏字体颜色为浅色
 //        } else {
 //            UltimateBar ultimateBar = new UltimateBar(this);
 //            ultimateBar.setImmersionBar();//沉浸式

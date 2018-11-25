@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import mina.king.com.minademo.R;
@@ -29,17 +30,18 @@ import ui.king.com.kinglibrary.okhttp.utils.JsonGenericsSerializator;
 
 public class LoginViewModel extends BaseViewModel {
 
-    protected Context context;
     private String phoneNumber = "";
     private String psd = "";
     public ObservableInt isShow = new ObservableInt(View.INVISIBLE);//删除按钮的显示
     public ObservableField<String> phone = new ObservableField();
 
-    public LoginViewModel(@NonNull Application application) {
-        super(application);
-        this.context =application;
+    public LoginViewModel(Activity activity) {
+        super(activity);
     }
+
+
     public TextWatcher getPhoneNumber(){
+
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,7 +116,7 @@ public class LoginViewModel extends BaseViewModel {
                         public void onResponse(LoginModel response, int id) {
                             if (response.getCode()==SUCCESS){
                                 toast(response.getMsg());
-                                context.startActivity(new Intent(context, ChatActivity.class));
+                                activity.startActivity(new Intent(context, ChatActivity.class));
                                 activity.finish();
                             }else {
                                 toast(response.getMsg());
@@ -139,15 +141,11 @@ public class LoginViewModel extends BaseViewModel {
      * @param view
      */
     public void register(View view){
-        context.startActivity(new Intent(context,RegisterActivity.class));
+        activity.startActivity(new Intent(context,RegisterActivity.class));
     }
 
     public void deletePhoneNumber(View view){
         phone.set("");
     }
 
-    @Override
-    public void getAvtivity(Activity activity) {
-        super.getAvtivity(activity);
-    }
 }

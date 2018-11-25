@@ -21,8 +21,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
 
     @Override
     public LoginViewModel initViewModel() {
-        LoginViewModel model = new LoginViewModel(getApplication());
-        model.getAvtivity(this);
+        LoginViewModel model = new LoginViewModel(this);
         return model;
     }
 

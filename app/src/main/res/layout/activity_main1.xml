@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<layout>
+    <data>
+        <variable
+            name="mainVM"
+            type="mina.king.com.minademo.main.viewModel.MainViewModl"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/flFragemnt"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+        <View
+            android:id="@+id/line"
+            style="@style/line_horizontal_matchParent"/>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:setOnCheckedChangeListener="@{mainVM.getRg}"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dip_44">
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/rbNews"
+                android:textSize="@dimen/text_size_12"
+                android:gravity="center_horizontal"
+                android:button="@null"
+                android:textColor="@color/selector_color_violet"
+                android:text="@string/news"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/rbUser"
+                android:textSize="@dimen/text_size_12"
+                android:gravity="center_horizontal"
+                android:button="@null"
+                android:textColor="@color/selector_color_violet"
+                android:text="@string/users"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/rbMine"
+                android:textSize="@dimen/text_size_12"
+                android:gravity="center_horizontal"
+                android:button="@null"
+                android:textColor="@color/selector_color_violet"
+                android:text="@string/mine"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+    </LinearLayout>
+</layout>
 
-</android.support.constraint.ConstraintLayout>
