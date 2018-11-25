@@ -6,7 +6,5 @@ import android.support.annotation.NonNull;
 import ui.king.com.kinglibrary.base.BaseViewModel;
 
 public class UsersViewModel extends BaseViewModel {
-    public UsersViewModel(@NonNull Application application) {
-        super(application);
-    }
+
 }

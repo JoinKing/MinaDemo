@@ -35,7 +35,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding,MineViewModel
 
     @Override
     public MineViewModel initViewModel() {
-        return null;
+        return new MineViewModel();
     }
 
     @Override

@@ -8,6 +8,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:clickable="true"
+        android:background="@mipmap/bg_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
@@ -20,6 +21,7 @@
             android:id="@+id/line"
             style="@style/line_horizontal_matchParent"/>
         <RadioGroup
+            android:clickable="true"
             android:id="@+id/radioGroup"
             android:setOnCheckedChangeListener="@{mainVM.getRg}"
             android:background="@color/colorWhite"
@@ -27,9 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dip_44">
             <RadioButton
+                android:clickable="true"
                 android:checked="true"
                 android:id="@+id/rbNews"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_15"
                 android:gravity="center_horizontal"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"
@@ -39,8 +42,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <RadioButton
+                android:clickable="true"
                 android:id="@+id/rbUser"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_15"
                 android:gravity="center_horizontal"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"
@@ -50,8 +54,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <RadioButton
+                android:clickable="true"
                 android:id="@+id/rbMine"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_15"
                 android:gravity="center_horizontal"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"

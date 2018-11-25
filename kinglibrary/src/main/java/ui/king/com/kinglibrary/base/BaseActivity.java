@@ -33,6 +33,12 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mViewModel.onCreate();
         //沉浸式
         initTitle();
+        //初始化数据
+        initViewObservable();
+    }
+
+    public void toast(String obj) {
+        Toast.makeText(this, obj, Toast.LENGTH_SHORT).show();
     }
 
     private void initTitle() {

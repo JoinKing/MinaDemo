@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class BaseViewModel extends ViewModel {
 
     protected Context context;
-    protected Activity activity;
+    protected BaseActivity activity;
     protected String TAG = "[KING]";
     public int BLACK = 0X001;
     public int WRITE = 0X002;
@@ -41,16 +41,19 @@ public class BaseViewModel extends ViewModel {
     @SuppressLint("StaticFieldLeak")
     private Application mApplication;
 
+    public BaseViewModel() {
+    }
+
     public BaseViewModel(@NonNull Application application) {
         mApplication = application;
     }
 
-    public BaseViewModel(Activity activity) {
+    public BaseViewModel(BaseActivity activity) {
         this.activity = activity;
         this.context = activity;
     }
 
-    public BaseViewModel(Activity activity, Application mApplication) {
+    public BaseViewModel(BaseActivity activity, Application mApplication) {
         this.activity = activity;
         this.mApplication = mApplication;
     }
@@ -98,10 +101,6 @@ public class BaseViewModel extends ViewModel {
         Toast.makeText(context, obj, Toast.LENGTH_SHORT).show();
     }
 
-    public void getAvtivity(Activity activity) {
-        this.activity = activity;
-
-    }
 
 
 }

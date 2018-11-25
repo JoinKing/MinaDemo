@@ -4,19 +4,28 @@ import android.app.Activity;
 import android.app.Application;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import mina.king.com.minademo.R;
+import mina.king.com.minademo.mine.view.MineFragment;
+import mina.king.com.minademo.news.view.NewFragment;
+import mina.king.com.minademo.users.view.UsersFragment;
+import ui.king.com.kinglibrary.base.BaseActivity;
+import ui.king.com.kinglibrary.base.BaseFragment;
 import ui.king.com.kinglibrary.base.BaseViewModel;
 
 public class MainViewModl extends BaseViewModel {
 
     private ViewDataBinding binding;
+    private FragmentManager fragmentManager;
 
-    public MainViewModl(Activity activity, ViewDataBinding binding) {
+    public MainViewModl(BaseActivity activity, ViewDataBinding binding) {
         super(activity);
         this.binding = binding;
+        changeFragment(new NewFragment());
     }
 
 
@@ -24,19 +33,23 @@ public class MainViewModl extends BaseViewModel {
         return new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (group.getId() == R.id.rbNews) {
-                    toast("消息");
-
-                } else if (group.getId() == R.id.rbUser) {
-                    toast("消息1");
-
-                } else if (group.getId() == R.id.rbMine) {
-                    toast("消息2");
-
+                if (checkedId == R.id.rbNews) {
+                    changeFragment(new NewFragment());
+                } else if (checkedId == R.id.rbUser) {
+                    changeFragment(new UsersFragment());
+                } else if (checkedId == R.id.rbMine) {
+                    changeFragment(new MineFragment());
                 }
 
             }
         };
+    }
+
+    private void changeFragment(BaseFragment fragment) {
+        fragmentManager = activity.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.flFragemnt, fragment);
+        transaction.commit();
     }
 
 }

@@ -21,6 +21,7 @@ import mina.king.com.minademo.login.model.LoginModel;
 import mina.king.com.minademo.login.view.RegisterActivity;
 import mina.king.com.minademo.util.Api;
 import okhttp3.Call;
+import ui.king.com.kinglibrary.base.BaseActivity;
 import ui.king.com.kinglibrary.base.BaseViewModel;
 import ui.king.com.kinglibrary.okhttp.OkHttpUtils;
 import ui.king.com.kinglibrary.okhttp.callback.GenericsCallback;
@@ -35,7 +36,7 @@ public class LoginViewModel extends BaseViewModel {
     public ObservableInt isShow = new ObservableInt(View.INVISIBLE);//删除按钮的显示
     public ObservableField<String> phone = new ObservableField();
 
-    public LoginViewModel(Activity activity) {
+    public LoginViewModel(BaseActivity activity) {
         super(activity);
     }
 

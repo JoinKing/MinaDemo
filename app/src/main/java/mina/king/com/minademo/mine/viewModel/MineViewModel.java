@@ -6,7 +6,5 @@ import android.support.annotation.NonNull;
 import ui.king.com.kinglibrary.base.BaseViewModel;
 
 public class MineViewModel extends BaseViewModel {
-    public MineViewModel(@NonNull Application application) {
-        super(application);
-    }
+
 }

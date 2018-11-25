@@ -34,7 +34,7 @@ public class NewFragment extends BaseFragment<FragmentNewBinding,NewsViewModel> 
 
     @Override
     public NewsViewModel initViewModel() {
-        return null;
+        return new NewsViewModel();
     }
 
     @Override

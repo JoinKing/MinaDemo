@@ -35,7 +35,7 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding,UsersViewMo
 
     @Override
     public UsersViewModel initViewModel() {
-        return null;
+        return new UsersViewModel();
     }
 
     @Override
