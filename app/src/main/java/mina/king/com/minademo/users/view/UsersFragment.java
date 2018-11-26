@@ -46,8 +46,9 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding,UsersViewMo
     @Override
     public void initData() {
         adapter = new UsersAdapter();
-        model.initData();
+        model.setAdapter(adapter);
         mBinding.elUsers.setAdapter(adapter);
+        model.initData();
     }
 
     @Override
