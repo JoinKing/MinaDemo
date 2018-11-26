@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="headTitle">
-        <attr name="centerTitle" format="string"/>
         <attr name="rightTitle" format="string"/>
+        <attr name="centerTitle" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="mainTitle">
+        <attr name="leftText" format="string"/>
+        <attr name="centerText" format="string"/>
     </declare-styleable>
 </resources>

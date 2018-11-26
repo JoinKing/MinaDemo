@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="mineVM"
@@ -12,13 +12,15 @@
         android:layout_height="match_parent"
         tools:context=".news.view.NewFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
+        <ui.king.com.kinglibrary.view.MainTitle
+            android:id="@+id/mtNews"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftText = ""
+            app:centerText = "我的"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="MINE" />
+            android:layout_height="wrap_content"/>
 
     </FrameLayout>
 </layout>

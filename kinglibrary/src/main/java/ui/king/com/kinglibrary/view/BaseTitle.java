@@ -39,6 +39,8 @@ public class BaseTitle extends LinearLayout{
         tvRight = view.findViewById(R.id.tvRight);
         String centerTitle = array.getString(R.styleable.headTitle_centerTitle);
         String rightTitle = array.getString(R.styleable.headTitle_rightTitle);
+
+
         tvMid.setText(centerTitle);
         tvRight.setText(rightTitle);
 

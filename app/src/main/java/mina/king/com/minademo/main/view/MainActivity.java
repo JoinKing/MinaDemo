@@ -1,10 +1,5 @@
 package mina.king.com.minademo.main.view;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-
 import mina.king.com.minademo.BR;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.databinding.ActivityMain1Binding;
@@ -29,6 +24,7 @@ public class MainActivity extends BaseActivity<ActivityMain1Binding, MainViewMod
         return model;
 
     }
+
     @Override
     public void initViewObservable() {
 

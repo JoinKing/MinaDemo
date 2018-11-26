@@ -21,50 +21,48 @@
             android:id="@+id/line"
             style="@style/line_horizontal_matchParent"/>
         <RadioGroup
-            android:clickable="true"
             android:id="@+id/radioGroup"
             android:setOnCheckedChangeListener="@{mainVM.getRg}"
-            android:background="@color/colorWhite"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dip_44">
             <RadioButton
-                android:clickable="true"
                 android:checked="true"
                 android:id="@+id/rbNews"
-                android:textSize="@dimen/text_size_15"
-                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_12"
+                android:gravity="center"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"
                 android:text="@string/news"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
             <RadioButton
-                android:clickable="true"
                 android:id="@+id/rbUser"
-                android:textSize="@dimen/text_size_15"
-                android:gravity="center_horizontal"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"
                 android:text="@string/users"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
             <RadioButton
-                android:clickable="true"
                 android:id="@+id/rbMine"
-                android:textSize="@dimen/text_size_15"
-                android:gravity="center_horizontal"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"
+                android:gravity="center"
                 android:button="@null"
                 android:textColor="@color/selector_color_violet"
                 android:text="@string/mine"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </RadioGroup>
     </LinearLayout>
 </layout>

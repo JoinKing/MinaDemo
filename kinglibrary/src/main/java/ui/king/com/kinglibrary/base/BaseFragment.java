@@ -67,6 +67,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         initViewObservable();
         lazyLoad();
         commonLoad();
+        initData();
     }
 
     protected abstract void commonLoad();

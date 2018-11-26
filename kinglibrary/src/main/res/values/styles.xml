@@ -45,6 +45,11 @@
         <item name="android:layout_height">@dimen/dip_1</item>
         <item name="android:background">@color/color_f1f1f1</item>
     </style>
+    <style name="line_horizontal_matchParent1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dip_1</item>
+        <item name="android:background">@color/color_b3b3b3</item>
+    </style>
     <!--线条全屏horizontal-->
     <style name="line_horizontal_matchParent_margin_15">
         <item name="android:layout_marginLeft">@dimen/dip_15</item>

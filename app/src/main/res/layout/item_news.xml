@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="news"
+            type="mina.king.com.minademo.news.beans.NewsBean" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dip_10">
+
+        <ImageView
+            android:id="@+id/imHead"
+            app:image="@{news.image}"
+            android:layout_width="@dimen/dip_44"
+            android:layout_height="@dimen/dip_44"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dip_15"
+            android:layout_marginLeft="@dimen/dip_15"
+            android:maxLength="15"
+            android:text="@{news.name}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imHead"
+            app:layout_constraintLeft_toRightOf="@id/imHead"
+            app:layout_constraintTop_toTopOf="@id/imHead" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_15"
+            android:layout_marginTop="@dimen/dip_15"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:text="@{news.qianm}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/imHead"
+            app:layout_constraintLeft_toRightOf="@id/imHead"
+            app:layout_constraintTop_toTopOf="@id/imHead" />
+
+        <View
+            android:layout_marginTop="@dimen/dip_10"
+            app:layout_constraintTop_toBottomOf="@+id/imHead"
+            style="@style/line_horizontal_matchParent1" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

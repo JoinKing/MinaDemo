@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dip_15"
-            android:drawableLeft="@mipmap/ic_back"
+            android:drawableLeft="@mipmap/icon_back"
             android:drawablePadding="@dimen/dip_5"
             android:gravity="center_vertical"
             android:textColor="@color/color_f3f3f3"
