@@ -9,7 +9,7 @@ import mina.king.com.minademo.base.MyApplication;
 
 public class ImageDataBinding {
 
-    @BindingAdapter("app:image")
+    @BindingAdapter("image")
     public static void setImage(ImageView imageView, String url){
         Glide.with(MyApplication.getInstance().getApplicationContext()).load(url).into(imageView);
     }
