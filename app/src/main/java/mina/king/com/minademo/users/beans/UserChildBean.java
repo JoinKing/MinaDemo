@@ -4,17 +4,20 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 public class UserChildBean extends BaseObservable {
-    private String image;
+    private String headImage;
     private String title;
     private String content;
+
     @Bindable
-    public String getImage() {
-        return image;
+    public String getHeadImage() {
+        return headImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
     }
+
+
     @Bindable
     public String getTitle() {
         return title;
@@ -23,6 +26,7 @@ public class UserChildBean extends BaseObservable {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @Bindable
     public String getContent() {
         return content;
@@ -35,7 +39,7 @@ public class UserChildBean extends BaseObservable {
     @Override
     public String toString() {
         return "UserChildBean{" +
-                "image='" + image + '\'' +
+                "headImage='" + headImage + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';

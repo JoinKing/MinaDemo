@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -7,16 +8,38 @@
             type="mina.king.com.minademo.users.beans.UserChildBean" />
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dip_44">
+
+        <ImageView
+            android:layout_marginLeft="@dimen/dip_20"
+            android:id="@+id/ivHead"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shap_image="@{child.headImage}"
+            android:adjustViewBounds="true"
+            android:layout_width="@dimen/dip_36"
+            android:layout_height="@dimen/dip_36" />
         <TextView
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/dip_10"
+            android:id="@+id/tvTitle"
+            app:layout_constraintLeft_toRightOf="@+id/ivHead"
             android:textColor="@color/white"
-            android:padding="@dimen/dip_10"
             android:text="@{child.title}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:paddingLeft="@dimen/dip_10"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintLeft_toRightOf="@+id/ivHead"
+            android:textColor="@color/white"
+            android:text="@{child.content}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

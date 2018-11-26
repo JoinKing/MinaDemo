@@ -24,6 +24,8 @@
             android:layout_height="wrap_content"/>
 
         <ExpandableListView
+            android:divider="@null"
+            android:groupIndicator="@null"
             android:id="@+id/elUsers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

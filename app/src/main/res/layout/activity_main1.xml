@@ -19,7 +19,7 @@
         </FrameLayout>
         <View
             android:id="@+id/line"
-            style="@style/line_horizontal_matchParent"/>
+            style="@style/line_horizontal_matchParent1"/>
         <RadioGroup
             android:id="@+id/radioGroup"
             android:setOnCheckedChangeListener="@{mainVM.getRg}"

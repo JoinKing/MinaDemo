@@ -73,13 +73,19 @@ public class UsersAdapter implements ExpandableListAdapter {
         ItemUserGroupBinding binding=DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_group,parent,false);
         binding.setVariable(BR.group,beanList.get(groupPosition));
         binding.executePendingBindings();
+        if (isExpanded) {
+            binding.ivSelect.setImageResource(R.drawable.select_up);
+        } else {
+            binding.ivSelect.setImageResource(R.drawable.select_down);
+        }
+
         return binding.getRoot();
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ItemUserChildBinding binding=DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_child,parent,false);
-        binding.setVariable(BR.child,beanList.get(groupPosition).getUserChildBeanList());
+        binding.setVariable(BR.child,beanList.get(groupPosition).getUserChildBeanList().get(childPosition));
         binding.executePendingBindings();
         return binding.getRoot();
     }

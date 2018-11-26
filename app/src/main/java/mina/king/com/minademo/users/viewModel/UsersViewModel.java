@@ -26,9 +26,9 @@ public class UsersViewModel extends BaseViewModel {
         List<UserChildBean>userChildBeans = new ArrayList<>();
         for (int i = 0; i <5 ; i++) {
             UserChildBean bean = new UserChildBean();
-            bean.setContent("xxx");
-            bean.setImage("xxx");
-            bean.setTitle("xxx");
+            bean.setContent("setContent");
+            bean.setHeadImage("https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=449308356,1283831331&fm=73&s=3C1105DB44AB331519384D3A03005043");
+            bean.setTitle("zhangsan");
             userChildBeans.add(bean);
         }
 
