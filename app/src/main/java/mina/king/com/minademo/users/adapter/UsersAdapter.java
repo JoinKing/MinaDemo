@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,9 @@ public class UsersAdapter implements ExpandableListAdapter {
 
     private List<UserGroupBean>beanList = new ArrayList<>();
 
-
+    public void setBeanList(List<UserGroupBean> beanList) {
+        this.beanList = beanList;
+    }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {

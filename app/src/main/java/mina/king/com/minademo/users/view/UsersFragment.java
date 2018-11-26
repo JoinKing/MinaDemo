@@ -5,6 +5,7 @@ import mina.king.com.minademo.BR;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.databinding.FragmentNewBinding;
 import mina.king.com.minademo.databinding.FragmentUsersBinding;
+import mina.king.com.minademo.users.adapter.UsersAdapter;
 import mina.king.com.minademo.users.viewModel.UsersViewModel;
 import ui.king.com.kinglibrary.base.BaseFragment;
 
@@ -12,6 +13,9 @@ import ui.king.com.kinglibrary.base.BaseFragment;
  *
  */
 public class UsersFragment extends BaseFragment<FragmentUsersBinding,UsersViewModel> {
+
+    private UsersAdapter adapter;
+    private UsersViewModel model;
 
 
     public UsersFragment() {
@@ -35,12 +39,15 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding,UsersViewMo
 
     @Override
     public UsersViewModel initViewModel() {
-        return new UsersViewModel();
+        model = new UsersViewModel();
+        return model;
     }
 
     @Override
     public void initData() {
-
+        adapter = new UsersAdapter();
+        model.initData();
+        mBinding.elUsers.setAdapter(adapter);
     }
 
     @Override
