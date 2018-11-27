@@ -3,7 +3,7 @@
     <data>
         <variable
             name="userVM"
-            type="mina.king.com.minademo.news.viewModel.NewsViewModel"/>
+            type="mina.king.com.minademo.users.viewModel.UsersViewModel"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,6 +26,7 @@
         <ExpandableListView
             android:divider="@null"
             android:groupIndicator="@null"
+            android:setOnChildClickListener="@{userVM.getOnChildClicklistener}"
             android:id="@+id/elUsers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

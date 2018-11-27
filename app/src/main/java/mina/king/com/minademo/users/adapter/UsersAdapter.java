@@ -2,10 +2,12 @@ package mina.king.com.minademo.users.adapter;
 
 import android.database.DataSetObserver;
 import android.databinding.DataBindingUtil;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +19,21 @@ import mina.king.com.minademo.users.beans.UserGroupBean;
 
 public class UsersAdapter implements ExpandableListAdapter {
 
-    private List<UserGroupBean>beanList = new ArrayList<>();
+    private List<UserGroupBean> beanList = new ArrayList<>();
 
     public void setBeanList(List<UserGroupBean> beanList) {
         this.beanList = beanList;
+//        registerDataSetObserver(new DataSetObserver() {
+//            @Override
+//            public void onChanged() {
+//                super.onChanged();
+//            }
+//
+//            @Override
+//            public void onInvalidated() {
+//                super.onInvalidated();
+//            }
+//        });
     }
 
     @Override
@@ -70,34 +83,33 @@ public class UsersAdapter implements ExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        ItemUserGroupBinding binding=DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_group,parent,false);
-        binding.setVariable(BR.group,beanList.get(groupPosition));
+        ItemUserGroupBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_group, parent, false);
+        binding.setVariable(BR.group, beanList.get(groupPosition));
         binding.executePendingBindings();
         if (isExpanded) {
             binding.ivSelect.setImageResource(R.drawable.select_up);
         } else {
             binding.ivSelect.setImageResource(R.drawable.select_down);
         }
-
         return binding.getRoot();
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ItemUserChildBinding binding=DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_child,parent,false);
-        binding.setVariable(BR.child,beanList.get(groupPosition).getUserChildBeanList().get(childPosition));
+        ItemUserChildBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_child, parent, false);
+        binding.setVariable(BR.child, beanList.get(groupPosition).getUserChildBeanList().get(childPosition));
         binding.executePendingBindings();
         return binding.getRoot();
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean areAllItemsEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -117,7 +129,7 @@ public class UsersAdapter implements ExpandableListAdapter {
 
     @Override
     public long getCombinedChildId(long groupId, long childId) {
-        return 0;
+        return beanList.get(0).getUserChildBeanList().size();
     }
 
     @Override

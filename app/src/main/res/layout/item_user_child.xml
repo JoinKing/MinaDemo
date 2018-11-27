@@ -5,7 +5,7 @@
     <data>
         <variable
             name="child"
-            type="mina.king.com.minademo.users.beans.UserChildBean" />
+            type="mina.king.com.minademo.users.beans.UsersBean.ListBean" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -29,7 +29,7 @@
             android:id="@+id/tvTitle"
             app:layout_constraintLeft_toRightOf="@+id/ivHead"
             android:textColor="@color/white"
-            android:text="@{child.title}"
+            android:text="@{child.nickName}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             app:layout_constraintLeft_toRightOf="@+id/ivHead"
             android:textColor="@color/white"
-            android:text="@{child.content}"
+            android:text="@{child.signature}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -44,4 +44,6 @@ public class UserChildBean extends BaseObservable {
                 ", content='" + content + '\'' +
                 '}';
     }
+
+
 }

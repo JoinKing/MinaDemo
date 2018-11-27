@@ -21,7 +21,7 @@ public class NewsViewModel extends BaseViewModel {
     }
 
     public void initData(){
-        for (int i = 0; i <100 ; i++) {
+        for (int i = 0; i <2 ; i++) {
             NewsBean bean = new NewsBean();
             bean.setImage("https://csdnimg.cn/pubfooter/images/csdn-kf.png");
             bean.setName("name"+i);

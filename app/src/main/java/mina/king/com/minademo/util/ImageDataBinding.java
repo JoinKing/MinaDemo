@@ -29,8 +29,7 @@ public class ImageDataBinding {
     public static void setShapImage(ImageView imageView,String url){
         RequestOptions mRequestOptions = RequestOptions.circleCropTransform()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)//不做磁盘缓存
-                .skipMemoryCache(true);//不做内存缓存
-
+                .skipMemoryCache(false);//不做内存缓存
         Glide.with(MyApplication.getInstance().getApplicationContext()).load(url).apply(mRequestOptions).into(imageView);
     }
 

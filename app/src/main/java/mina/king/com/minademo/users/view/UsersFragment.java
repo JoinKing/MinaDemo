@@ -1,6 +1,10 @@
 package mina.king.com.minademo.users.view;
 
 
+import android.util.Log;
+import android.view.View;
+import android.widget.ExpandableListView;
+
 import mina.king.com.minademo.BR;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.databinding.FragmentNewBinding;
@@ -12,7 +16,7 @@ import ui.king.com.kinglibrary.base.BaseFragment;
 /**
  *
  */
-public class UsersFragment extends BaseFragment<FragmentUsersBinding,UsersViewModel> {
+public class UsersFragment extends BaseFragment<FragmentUsersBinding, UsersViewModel> {
 
     private UsersAdapter adapter;
     private UsersViewModel model;

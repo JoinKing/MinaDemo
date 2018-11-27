@@ -7,21 +7,13 @@ import java.util.List;
 
 public class UserGroupBean extends BaseObservable {
     private String title;
-    private List<UserChildBean>userChildBeanList;
+    private List<UsersBean.ListBean>userChildBeanList;
 
-    @Override
-    public String toString() {
-        return "UserGroupBean{" +
-                "title='" + title + '\'' +
-                ", userChildBeanList=" + userChildBeanList +
-                '}';
-    }
-
-    public List<UserChildBean> getUserChildBeanList() {
+    public List<UsersBean.ListBean> getUserChildBeanList() {
         return userChildBeanList;
     }
 
-    public void setUserChildBeanList(List<UserChildBean> userChildBeanList) {
+    public void setUserChildBeanList(List<UsersBean.ListBean> userChildBeanList) {
         this.userChildBeanList = userChildBeanList;
     }
 

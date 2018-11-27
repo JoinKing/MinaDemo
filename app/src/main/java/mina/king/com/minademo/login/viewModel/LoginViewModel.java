@@ -19,6 +19,7 @@ import mina.king.com.minademo.R;
 import mina.king.com.minademo.chat.activity.ChatActivity;
 import mina.king.com.minademo.login.model.LoginModel;
 import mina.king.com.minademo.login.view.RegisterActivity;
+import mina.king.com.minademo.main.view.MainActivity;
 import mina.king.com.minademo.util.Api;
 import okhttp3.Call;
 import ui.king.com.kinglibrary.base.BaseActivity;
@@ -29,19 +30,19 @@ import ui.king.com.kinglibrary.okhttp.callback.StringCallback;
 import ui.king.com.kinglibrary.okhttp.utils.JsonGenericsSerializator;
 
 
-public class LoginViewModel extends BaseViewModel {
-
+public class LoginViewModel extends BaseViewModel implements BaseViewModel.ResponseCallBack{
     private String phoneNumber = "";
-    private String psd = "";
+    private String psd = "Aa1234";
     public ObservableInt isShow = new ObservableInt(View.INVISIBLE);//删除按钮的显示
     public ObservableField<String> phone = new ObservableField();
 
     public LoginViewModel(BaseActivity activity) {
         super(activity);
+        phone.set("17688831088");
     }
 
 
-    public TextWatcher getPhoneNumber(){
+    public TextWatcher getPhoneNumber() {
 
         return new TextWatcher() {
             @Override
@@ -56,11 +57,11 @@ public class LoginViewModel extends BaseViewModel {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!s.toString().trim().isEmpty()){
+                if (!s.toString().trim().isEmpty()) {
                     isShow.set(View.VISIBLE);
                     phoneNumber = s.toString().trim();
                     phone.set(phoneNumber);
-                }else {
+                } else {
                     isShow.set(View.INVISIBLE);
                     phoneNumber = "";
                     phone.set(phoneNumber);
@@ -69,7 +70,7 @@ public class LoginViewModel extends BaseViewModel {
         };
     }
 
-    public TextWatcher getPsd(){
+    public TextWatcher getPsd() {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -80,11 +81,12 @@ public class LoginViewModel extends BaseViewModel {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if (!s.toString().trim().isEmpty()){
+                if (!s.toString().trim().isEmpty()) {
                     psd = s.toString().trim();
-                }else {
+                } else {
                     psd = "";
                 }
             }
@@ -93,33 +95,40 @@ public class LoginViewModel extends BaseViewModel {
 
     /**
      * 登录
+     *
      * @param view
      */
-    public void loginButton(View view){
-        if (phoneNumber.isEmpty()||psd.isEmpty()){
+    public void loginButton(View view) {
+        if (phoneNumber.isEmpty() || psd.isEmpty()) {
             Toast.makeText(context, context.getText(R.string.countAndPsdIsemoty), Toast.LENGTH_SHORT).show();
             return;
-        }else {
-            //登录接口
-            //缓存用户名id
+        } else {
+
+            parms.put("phone",phoneNumber);
+            parms.put("psd",psd);
+            setCallBack(this);
+//            initNetWorkData(Api.login,parms);
+
+//            //登录接口
+//            //缓存用户名id
             OkHttpUtils.post()
                     .url(Api.login)
-                    .addParams("phone",phoneNumber)
-                    .addParams("psd",psd)
+                    .addParams("phone", phoneNumber)
+                    .addParams("psd", psd)
                     .build()
                     .execute(new GenericsCallback<LoginModel>(new JsonGenericsSerializator()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            Log.e(TAG, "onError: "+e.getMessage() );
+                            Log.e(TAG, "onError: " + e.getMessage());
                         }
 
                         @Override
                         public void onResponse(LoginModel response, int id) {
-                            if (response.getCode()==SUCCESS){
+                            if (response.getCode() == SUCCESS) {
                                 toast(response.getMsg());
-                                activity.startActivity(new Intent(context, ChatActivity.class));
+                                activity.startActivity(new Intent(context, MainActivity.class));
                                 activity.finish();
-                            }else {
+                            } else {
                                 toast(response.getMsg());
                             }
                         }
@@ -131,22 +140,34 @@ public class LoginViewModel extends BaseViewModel {
 
     /**
      * 忘记密码
+     *
      * @param view
      */
-    public void forgetPsd(View view){
-        Log.e(TAG, "loginButton: "+phoneNumber );
+    public void forgetPsd(View view) {
+        Log.e(TAG, "loginButton: " + phoneNumber);
     }
 
     /**
      * 注册
+     *
      * @param view
      */
-    public void register(View view){
-        activity.startActivity(new Intent(context,RegisterActivity.class));
+    public void register(View view) {
+        activity.startActivity(new Intent(context, RegisterActivity.class));
     }
 
-    public void deletePhoneNumber(View view){
+    public void deletePhoneNumber(View view) {
         phone.set("");
     }
 
+    @Override
+    public void onError(String msg) {
+        Log.e(TAG, "onError: "+msg );
+
+    }
+
+    @Override
+    public void onResponse(String msg) {
+
+    }
 }
