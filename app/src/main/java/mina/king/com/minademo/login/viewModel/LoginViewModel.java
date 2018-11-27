@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import mina.king.com.minachat.utils.UserInfoCache;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.chat.activity.ChatActivity;
 import mina.king.com.minademo.login.model.LoginModel;
@@ -30,7 +31,7 @@ import ui.king.com.kinglibrary.okhttp.callback.StringCallback;
 import ui.king.com.kinglibrary.okhttp.utils.JsonGenericsSerializator;
 
 
-public class LoginViewModel extends BaseViewModel implements BaseViewModel.ResponseCallBack{
+public class LoginViewModel extends BaseViewModel<LoginModel> implements BaseViewModel.ResponseCallBack{
     private String phoneNumber = "";
     private String psd = "Aa1234";
     public ObservableInt isShow = new ObservableInt(View.INVISIBLE);//删除按钮的显示
@@ -93,6 +94,13 @@ public class LoginViewModel extends BaseViewModel implements BaseViewModel.Respo
         };
     }
 
+    @Override
+    protected void getNet(LoginModel model) {
+
+        Log.e(TAG, "getNet: "+model );
+
+    }
+
     /**
      * 登录
      *
@@ -108,7 +116,6 @@ public class LoginViewModel extends BaseViewModel implements BaseViewModel.Respo
             parms.put("psd",psd);
             setCallBack(this);
 //            initNetWorkData(Api.login,parms);
-
 //            //登录接口
 //            //缓存用户名id
             OkHttpUtils.post()
@@ -126,6 +133,8 @@ public class LoginViewModel extends BaseViewModel implements BaseViewModel.Respo
                         public void onResponse(LoginModel response, int id) {
                             if (response.getCode() == SUCCESS) {
                                 toast(response.getMsg());
+                                UserInfoCache.saveUserInfo(UserInfoCache.USER_ID,response.getUserInfo().getUserName());
+                                UserInfoCache.saveUserInfo(UserInfoCache.HEAD_IMAGE,response.getUserInfo().getHeadImage());
                                 activity.startActivity(new Intent(context, MainActivity.class));
                                 activity.finish();
                             } else {

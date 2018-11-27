@@ -31,25 +31,6 @@ public class ChatAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.messageInfoList = messageInfoList;
     }
 
-//    @Override
-//    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-//        BaseViewHolder viewHolder = null;
-//        switch (viewType) {
-//            case Constants.CHAT_ITEM_TYPE_LEFT:
-//                viewHolder = new ChatAcceptViewHolder(parent, onItemClickListener, handler);
-//                break;
-//            case Constants.CHAT_ITEM_TYPE_RIGHT:
-//                viewHolder = new ChatSendViewHolder(parent, onItemClickListener, handler);
-//                break;
-//        }
-//        return viewHolder;
-//    }
-//
-//    @Override
-//    public int getViewType(int position) {
-//        return getAllData().get(position).getType();
-//    }
-
     public void addItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }

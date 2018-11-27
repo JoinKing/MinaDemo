@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import mina.king.com.minachat.utils.UserInfoCache;
 import mina.king.com.minademo.R;
 import mina.king.com.minademo.chat.adapter.ChatAdapter;
 import mina.king.com.minademo.chat.enity.IMContact;
@@ -94,7 +95,7 @@ public class ChatAcceptViewHolder extends BaseViewHolder<MessageInfo> {
     @Override
     public void setData(MessageInfo data) {
         chatItemDate.setText(data.getTime() != null ? data.getTime() : "");
-        Glide.with(mContext).load(data.getHeader()).into(chatItemHeader);
+        Glide.with(mContext).load(UserInfoCache.getUserInfo(UserInfoCache.HEAD_OTHER_IMAGE)).into(chatItemHeader);
         chatItemHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -23,17 +23,10 @@ public class UsersAdapter implements ExpandableListAdapter {
 
     public void setBeanList(List<UserGroupBean> beanList) {
         this.beanList = beanList;
-//        registerDataSetObserver(new DataSetObserver() {
-//            @Override
-//            public void onChanged() {
-//                super.onChanged();
-//            }
-//
-//            @Override
-//            public void onInvalidated() {
-//                super.onInvalidated();
-//            }
-//        });
+    }
+
+    public List<UserGroupBean> getBeanList() {
+        return beanList;
     }
 
     @Override
@@ -95,10 +88,22 @@ public class UsersAdapter implements ExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ItemUserChildBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_user_child, parent, false);
         binding.setVariable(BR.child, beanList.get(groupPosition).getUserChildBeanList().get(childPosition));
         binding.executePendingBindings();
+        if (beanList.get(groupPosition).getUserChildBeanList().size()>0){
+            binding.clChild.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onclick != null) {
+                        onclick.onClick(groupPosition, childPosition);
+                    }
+
+                }
+            });
+        }
+
         return binding.getRoot();
     }
 
@@ -136,4 +141,17 @@ public class UsersAdapter implements ExpandableListAdapter {
     public long getCombinedGroupId(long groupId) {
         return 0;
     }
+
+    private Onclick onclick;
+
+
+    public void setOnclick(Onclick onclick) {
+        this.onclick = onclick;
+    }
+
+    public interface Onclick {
+        void onClick(int group, int child);
+    }
+
+
 }

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import mina.king.com.minachat.utils.UserInfoCache;
+
 
 /**
  * Created by king
@@ -32,6 +34,7 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         mInstance = this;
         initScreenSize();
+        UserInfoCache.init(mContext);
     }
 
     public static Context getInstance() {

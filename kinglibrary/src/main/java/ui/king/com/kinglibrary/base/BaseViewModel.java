@@ -12,11 +12,12 @@ import java.util.HashMap;
 
 import okhttp3.Call;
 import ui.king.com.kinglibrary.okhttp.OkHttpUtils;
+import ui.king.com.kinglibrary.okhttp.callback.GenericsCallback;
 import ui.king.com.kinglibrary.okhttp.callback.StringCallback;
+import ui.king.com.kinglibrary.okhttp.utils.JsonGenericsSerializator;
 
 
-
-public class BaseViewModel extends ViewModel {
+public class BaseViewModel<M extends Object> extends ViewModel {
 
     protected Context context;
     protected BaseActivity activity;
@@ -49,6 +50,10 @@ public class BaseViewModel extends ViewModel {
 
     public BaseViewModel() {
 
+    }
+
+    public BaseViewModel(Context context) {
+        this.context = context;
     }
 
     public BaseViewModel(@NonNull Application application) {
@@ -113,7 +118,7 @@ public class BaseViewModel extends ViewModel {
                 .url(url)
                 .params(prams)
                 .build()
-                .execute(new StringCallback() {
+                .execute(new GenericsCallback<M>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         if (callBack!=null){
@@ -122,14 +127,14 @@ public class BaseViewModel extends ViewModel {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
-                        if (callBack!=null){
-                            callBack.onResponse(response);
-                        }
-
-
+                    public void onResponse(M response, int id) {
+                        getNet(response);
                     }
                 });
+    }
+
+    protected void getNet(M obj){
+
     }
 
     private ResponseCallBack callBack;

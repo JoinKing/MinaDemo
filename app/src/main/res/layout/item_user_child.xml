@@ -9,6 +9,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/clChild"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dip_44">

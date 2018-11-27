@@ -30,6 +30,7 @@ import mina.king.com.minachat.ClientMina;
 import mina.king.com.minachat.contract.ChatScreenContract;
 import mina.king.com.minachat.presenter.ChatScreenPresenter;
 import mina.king.com.minachat.utils.IpUtils;
+import mina.king.com.minachat.utils.UserInfoCache;
 import mina.king.com.minademo.R;
 import mina.king.com.minachat.beans.MessageInfo;
 import mina.king.com.minademo.base.MessageSuccess;
@@ -217,7 +218,7 @@ public class EmotionInputDetector implements
                 messageInfo.setContent(mEditText.getText().toString().trim());
                 messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
                 EventBus.getDefault().post(messageInfo);
-                presenter.sendTextMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_TEXT,0,messageInfo.getContent());
+                presenter.sendTextMsg(UserInfoCache.getUserInfo(UserInfoCache.USER_OTHER_ID),Constants.CHAT_FILE_TYPE_TEXT,0,messageInfo.getContent());
                 mEditText.setText("");
             }
         });
@@ -362,7 +363,7 @@ public class EmotionInputDetector implements
                 messageInfo.setVoiceTime(time);
                 Log.e(TAG, "onStop: "+time );
                 EventBus.getDefault().post(messageInfo);
-                presenter.sendVoiceMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_VOICE,time,new File(filePath));
+                presenter.sendVoiceMsg(UserInfoCache.getUserInfo(UserInfoCache.USER_OTHER_ID),Constants.CHAT_FILE_TYPE_VOICE,time,new File(filePath));
 
             }
 
@@ -487,6 +488,6 @@ public class EmotionInputDetector implements
 
     @Override
     public void getFile(File file) {
-        presenter.sendPicMsg(IpUtils.receiver,Constants.CHAT_FILE_TYPE_IMAGE,"", ImageUtils.scal(file));
+        presenter.sendPicMsg(UserInfoCache.getUserInfo(UserInfoCache.USER_OTHER_ID),Constants.CHAT_FILE_TYPE_IMAGE,"", ImageUtils.scal(file));
     }
 }

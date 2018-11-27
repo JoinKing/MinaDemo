@@ -64,7 +64,16 @@ public class LoginModel {
         private String sex;
         private int accountType;
         private String signature;
+        private String headImage;
         private int userState;
+
+        public String getHeadImage() {
+            return headImage;
+        }
+
+        public void setHeadImage(String headImage) {
+            this.headImage = headImage;
+        }
 
         public String getUserName() {
             return userName;

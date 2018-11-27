@@ -43,7 +43,7 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding, UsersViewM
 
     @Override
     public UsersViewModel initViewModel() {
-        model = new UsersViewModel();
+        model = new UsersViewModel(getContext());
         return model;
     }
 
